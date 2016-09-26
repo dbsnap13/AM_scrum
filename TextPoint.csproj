@@ -33,10 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio">
-      <HintPath>..\..\Naudio\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WindowsMediaFormat">
-      <HintPath>..\..\Naudio\NAudio.WindowsMediaFormat.dll</HintPath>
+      <HintPath>packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,6 +54,9 @@
     <Compile Include="FRMMain.Designer.cs">
       <DependentUpon>FRMMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="IExtension.cs" />
+    <Compile Include="InvertedColors.cs" />
+    <Compile Include="ITextPoint.cs" />
     <Compile Include="Mp3Audio.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +74,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -86,16 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\InvertedColorsExtension\InvertedColorsExtension.csproj">
-      <Project>{ee947ce0-abbb-4d09-aaba-98ce49d1e4b6}</Project>
-      <Name>InvertedColorsExtension</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TextPointExtensibility\TextPointExtensibility.csproj">
-      <Project>{48c83839-72a4-4e94-8725-e8537db9860f}</Project>
-      <Name>TextPointExtensibility</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
