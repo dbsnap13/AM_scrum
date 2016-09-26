@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.RTBText = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,20 +42,10 @@
             this.btnTimeStamp = new System.Windows.Forms.Button();
             this.lblCurrent = new System.Windows.Forms.Label();
             this.btnRepeat = new System.Windows.Forms.Button();
+            this.enhTxtBox = new System.Windows.Forms.Integration.ElementHost();
+            this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // RTBText
-            // 
-            this.RTBText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RTBText.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTBText.Location = new System.Drawing.Point(0, 27);
-            this.RTBText.Name = "RTBText";
-            this.RTBText.Size = new System.Drawing.Size(521, 326);
-            this.RTBText.TabIndex = 0;
-            this.RTBText.Text = "";
             // 
             // menuStrip1
             // 
@@ -126,21 +115,21 @@
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
@@ -172,15 +161,24 @@
             this.btnRepeat.UseVisualStyleBackColor = true;
             this.btnRepeat.Click += new System.EventHandler(this.button3_Click);
             // 
+            // enhTxtBox
+            // 
+            this.enhTxtBox.Location = new System.Drawing.Point(13, 28);
+            this.enhTxtBox.Name = "enhTxtBox";
+            this.enhTxtBox.Size = new System.Drawing.Size(496, 334);
+            this.enhTxtBox.TabIndex = 7;
+            this.enhTxtBox.Text = "elementHost1";
+            this.enhTxtBox.Child = this.enhanchedTextBox1;
+            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(521, 421);
+            this.Controls.Add(this.enhTxtBox);
             this.Controls.Add(this.btnRepeat);
             this.Controls.Add(this.lblCurrent);
             this.Controls.Add(this.btnTimeStamp);
-            this.Controls.Add(this.RTBText);
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
@@ -197,8 +195,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox RTBText;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -213,6 +209,8 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+        private System.Windows.Forms.Integration.ElementHost enhTxtBox;
+        private EnhanchedTextBox enhanchedTextBox1;
     }
 }
 

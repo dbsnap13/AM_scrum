@@ -67,21 +67,22 @@ namespace TextPoint
         #region Cut, copy & paste Edit Menu
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (RTBText.SelectedText != string.Empty)
-                Clipboard.SetData(DataFormats.Text, RTBText.SelectedText);
+            if (enhanchedTextBox1.txtBox.SelectedText != string.Empty)
+                Clipboard.SetData(DataFormats.Text, enhanchedTextBox1.txtBox.SelectedText);
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int position = RTBText.SelectionStart;
-            RTBText.Text = RTBText.Text.Insert(position, Clipboard.GetText());
+            int position = enhanchedTextBox1.txtBox.SelectionStart;
+            enhanchedTextBox1.txtBox.Text = enhanchedTextBox1.txtBox.Text.Insert(position, Clipboard.GetText());
+            enhanchedTextBox1.txtBox.SelectionStart = enhanchedTextBox1.txtBox.Text.Length -1;
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (RTBText.SelectedText != string.Empty)
-                Clipboard.SetData(DataFormats.Text, RTBText.SelectedText);
-            RTBText.SelectedText = string.Empty;
+            if (enhanchedTextBox1.txtBox.SelectedText != string.Empty)
+                Clipboard.SetData(DataFormats.Text, enhanchedTextBox1.txtBox.SelectedText);
+            enhanchedTextBox1.txtBox.SelectedText = string.Empty;
         }
         #endregion
 
@@ -97,7 +98,7 @@ namespace TextPoint
             {
                 if (ofd.FileName.Contains("txt"))
                 {
-                    RTBText.Text = File.ReadAllText(ofd.FileName);
+                    enhTxtBox.Text = File.ReadAllText(ofd.FileName);
                 }
                 else if (ofd.FileName.Contains("wav"))
                 {
@@ -121,7 +122,7 @@ namespace TextPoint
             sfd.CheckPathExists = true;
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                File.WriteAllText(sfd.FileName, RTBText.Text);
+                File.WriteAllText(sfd.FileName, enhTxtBox.Text);
             }
         }
         #endregion
@@ -129,27 +130,27 @@ namespace TextPoint
         #region SetExtensibility
         public void SetBackgroundColor(Color col)
         {
-            RTBText.BackColor = col;
+            enhTxtBox.BackColor = col;
         }
 
         public void SetForegroundColor(Color col)
         {
-            RTBText.ForeColor = col;
+            enhTxtBox.ForeColor = col;
         }
 
         public void SetFont(Font font)
         {
-            RTBText.Font = font;
+            enhTxtBox.Font = font;
         }
 
         public string GetText()
         {
-            return RTBText.Text;
+            return enhTxtBox.Text;
         }
 
         public void SetText(string text)
         {
-            RTBText.Text = text;
+            enhTxtBox.Text = text;
         }
         #endregion
 
@@ -165,9 +166,10 @@ namespace TextPoint
                 lblCurrent.Text = timeStamp;
                 string formattedTimeStamp = " {" + timeStamp + "} ";
 
-                var selectionIndex = RTBText.SelectionStart;
-                RTBText.Focus();
-                RTBText.Text = RTBText.Text.Insert(selectionIndex, formattedTimeStamp);
+                var selectionIndex = enhanchedTextBox1.txtBox.SelectionStart;
+                enhanchedTextBox1.txtBox.Focus();
+                enhanchedTextBox1.txtBox.Text = enhanchedTextBox1.txtBox.Text.Insert(selectionIndex, formattedTimeStamp);
+                enhanchedTextBox1.txtBox.SelectionStart = enhanchedTextBox1.txtBox.Text.Length - 1;
             }
             else if(mp3.AudioTypeMp3 && mp3.CheckOutput)
             {
@@ -175,9 +177,10 @@ namespace TextPoint
                 lblCurrent.Text = timeStamp;
                 string formattedTimeStamp = " {" + timeStamp + "} ";
 
-                var selectionIndex = RTBText.SelectionStart;
-                RTBText.Focus();
-                RTBText.Text = RTBText.Text.Insert(selectionIndex, formattedTimeStamp);
+                var selectionIndex = enhanchedTextBox1.txtBox.SelectionStart;
+                enhanchedTextBox1.txtBox.Focus();
+                enhanchedTextBox1.txtBox.Text = enhanchedTextBox1.txtBox.Text.Insert(selectionIndex, formattedTimeStamp);
+                enhanchedTextBox1.txtBox.SelectionStart = enhanchedTextBox1.txtBox.Text.Length - 1;
             }
         }
 

@@ -14,6 +14,10 @@ namespace TextPoint
         public Mp3FileReader mp3 { get; set; }
         public DirectSoundOut output { get; set; }
 
+        /// <summary>
+        /// Possibly exchange both Wave/MP3 FileReaders with an AudioFileReader!!!
+        /// </summary>
+
         #region Timer related objects
         TimeSpan loop = new TimeSpan(0, 0, 3);
         private System.Timers.Timer timer = new System.Timers.Timer();
