@@ -9,15 +9,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NAudio;
-using NAudio.Wave;
 
 namespace TextPoint
 {
     public partial class FRMMain : Form, ITextPoint
     {
-        WavAudio wav = new WavAudio();
-        Mp3Audio mp3 = new Mp3Audio();
+        AudioPlayer _player = new AudioPlayer("");
 
         #region Initialize
         public FRMMain()
@@ -98,19 +95,12 @@ namespace TextPoint
             {
                 if (ofd.FileName.Contains("txt"))
                 {
-                    enhTxtBox.Text = File.ReadAllText(ofd.FileName);
+                    enhanchedTextBox1.txtBox.Text = File.ReadAllText(ofd.FileName);
                 }
-                else if (ofd.FileName.Contains("wav"))
+                else if (ofd.FileName.Contains("wav")||ofd.FileName.Contains("mp3"))
                 {
-                    wav.CreateWav(ofd.FileName);
-                    wav.PlayWav();
-                    wav.AudioTypeWav = true;
-                }
-                else if (ofd.FileName.Contains("mp3"))
-                {
-                    mp3.CreateMp3(ofd.FileName);
-                    mp3.PlayMp3();
-                    mp3.AudioTypeMp3 = true;
+                    _player = new AudioPlayer(ofd.FileName);
+                    _player.SetOutput = true;
                 }
             }
         }
@@ -118,11 +108,11 @@ namespace TextPoint
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Text files (*.txt)|*.txt";
+            sfd.Filter = "Text files (*.txt)|*.txt| Rich Text Files|*.rtf | Microsoft Document|*.doc";
             sfd.CheckPathExists = true;
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(sfd.FileName, enhTxtBox.Text);
+                File.WriteAllText(sfd.FileName, enhanchedTextBox1.txtBox.Text);
             }
         }
         #endregion
@@ -130,27 +120,27 @@ namespace TextPoint
         #region SetExtensibility
         public void SetBackgroundColor(Color col)
         {
-            enhTxtBox.BackColor = col;
+            //enhTxtBox.BackColor = col;
         }
 
         public void SetForegroundColor(Color col)
         {
-            enhTxtBox.ForeColor = col;
+            //enhTxtBox.ForeColor = col;
         }
 
         public void SetFont(Font font)
         {
-            enhTxtBox.Font = font;
+            //enhTxtBox.Font = font;
         }
 
         public string GetText()
         {
-            return enhTxtBox.Text;
+            return enhanchedTextBox1.txtBox.Text;
         }
 
         public void SetText(string text)
         {
-            enhTxtBox.Text = text;
+            enhanchedTextBox1.txtBox.Text = text;
         }
         #endregion
 
@@ -158,22 +148,11 @@ namespace TextPoint
         /// <summary>
         /// Sets and inserts the timestamp into the text.
         /// </summary>
-        private void button1_Click(object sender, EventArgs e)
+        private void btnTimeStamp_Click(object sender, EventArgs e)
         {
-            if (wav.AudioTypeWav && wav.CheckOutput)
+            if (_player.SetOutput)
             {
-                string timeStamp = wav.CurrentWavTime().ToString("mm\\:ss");
-                lblCurrent.Text = timeStamp;
-                string formattedTimeStamp = " {" + timeStamp + "} ";
-
-                var selectionIndex = enhanchedTextBox1.txtBox.SelectionStart;
-                enhanchedTextBox1.txtBox.Focus();
-                enhanchedTextBox1.txtBox.Text = enhanchedTextBox1.txtBox.Text.Insert(selectionIndex, formattedTimeStamp);
-                enhanchedTextBox1.txtBox.SelectionStart = enhanchedTextBox1.txtBox.Text.Length - 1;
-            }
-            else if(mp3.AudioTypeMp3 && mp3.CheckOutput)
-            {
-                string timeStamp = mp3.CurrentMp3Time().ToString("mm\\:ss");
+                string timeStamp = _player.CurrentTime();
                 lblCurrent.Text = timeStamp;
                 string formattedTimeStamp = " {" + timeStamp + "} ";
 
@@ -187,11 +166,19 @@ namespace TextPoint
         /// <summary>
         /// Activates the audiotimer, currently set to 3 secs. 'wav' is in this case arbitrary, might as well be 'mp3'.
         /// </summary>
-        private void button3_Click(object sender, EventArgs e)
+        private void btnRepeat_Click(object sender, EventArgs e)
         {
-            if (wav.AudioTypeWav && wav.CheckOutput)
-                wav.ActivateAudioTimer();
-            else mp3.ActivateAudioTimer();
+            _player.EnableOrDisableTimer();
+        }
+
+        private void btnPlayPause_Click(object sender, EventArgs e)
+        {
+            _player.PlayPause();
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            _player.Stop();
         }
         #endregion
 
@@ -200,11 +187,7 @@ namespace TextPoint
         /// </summary>
         private void FRMMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (wav.AudioTypeWav && wav.CheckOutput)
-                wav.DisposeWav();
-            else if(mp3.AudioTypeMp3 && mp3.CheckOutput)
-                mp3.DisposeMp3();
-            else { }
+            _player.Dispose();
         }
 
         /// <summary>
@@ -212,42 +195,25 @@ namespace TextPoint
         /// </summary>
         private void FRMMain_KeyDown(object sender, KeyEventArgs e)
         {
-            if (wav.AudioTypeWav && wav.CheckOutput)
+            if (_player.SetOutput)
             {
                 switch (e.KeyCode)
                 {
                     case Keys.F2:
-                        int dur = wav.PlayOrPauseWav();
-                        lblCurrent.Text = ((dur % 60)).ToString("00.00");
+                        _player.PlayPause();
+                        lblCurrent.Text = _player.GetDuration();
                         break;
                     case Keys.F3:
-                        button1_Click(sender, e);
+                        btnTimeStamp_Click(sender, e);
                         break;
                     case Keys.F4:
-                        button3_Click(sender, e);
+                        btnRepeat_Click(sender, e);
                         break;
                     default:
                         break;
                 }
             }
-            else if (mp3.AudioTypeMp3 && mp3.CheckOutput)
-            {
-                switch (e.KeyCode)
-                {
-                    case Keys.F2:
-                        int dur = mp3.PlayOrPauseMp3();
-                        lblCurrent.Text = ((dur % 60)).ToString("00.00");
-                        break;
-                    case Keys.F3:
-                        button1_Click(sender, e);
-                        break;
-                    case Keys.F4:
-                        button3_Click(sender, e);
-                        break;
-                    default:
-                        break;
-                }
-            }
+
         }
     }
 }

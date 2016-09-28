@@ -44,6 +44,8 @@
             this.btnRepeat = new System.Windows.Forms.Button();
             this.enhTxtBox = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
+            this.btnPlayPause = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +57,7 @@
             this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(521, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(955, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "File";
             // 
@@ -135,13 +137,13 @@
             // 
             // btnTimeStamp
             // 
-            this.btnTimeStamp.Location = new System.Drawing.Point(29, 377);
+            this.btnTimeStamp.Location = new System.Drawing.Point(13, 377);
             this.btnTimeStamp.Name = "btnTimeStamp";
             this.btnTimeStamp.Size = new System.Drawing.Size(75, 23);
             this.btnTimeStamp.TabIndex = 2;
             this.btnTimeStamp.Text = "Timestamp";
             this.btnTimeStamp.UseVisualStyleBackColor = true;
-            this.btnTimeStamp.Click += new System.EventHandler(this.button1_Click);
+            this.btnTimeStamp.Click += new System.EventHandler(this.btnTimeStamp_Click);
             // 
             // lblCurrent
             // 
@@ -153,13 +155,13 @@
             // 
             // btnRepeat
             // 
-            this.btnRepeat.Location = new System.Drawing.Point(126, 377);
+            this.btnRepeat.Location = new System.Drawing.Point(94, 377);
             this.btnRepeat.Name = "btnRepeat";
             this.btnRepeat.Size = new System.Drawing.Size(75, 23);
             this.btnRepeat.TabIndex = 6;
             this.btnRepeat.Text = "Repeat";
             this.btnRepeat.UseVisualStyleBackColor = true;
-            this.btnRepeat.Click += new System.EventHandler(this.button3_Click);
+            this.btnRepeat.Click += new System.EventHandler(this.btnRepeat_Click);
             // 
             // enhTxtBox
             // 
@@ -170,11 +172,33 @@
             this.enhTxtBox.Text = "elementHost1";
             this.enhTxtBox.Child = this.enhanchedTextBox1;
             // 
+            // btnPlayPause
+            // 
+            this.btnPlayPause.Location = new System.Drawing.Point(175, 377);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayPause.TabIndex = 8;
+            this.btnPlayPause.Text = "Play/Pause";
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(256, 377);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 9;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(521, 421);
+            this.ClientSize = new System.Drawing.Size(955, 421);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnPlayPause);
             this.Controls.Add(this.enhTxtBox);
             this.Controls.Add(this.btnRepeat);
             this.Controls.Add(this.lblCurrent);
@@ -211,6 +235,8 @@
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.Integration.ElementHost enhTxtBox;
         private EnhanchedTextBox enhanchedTextBox1;
+        private System.Windows.Forms.Button btnPlayPause;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 
