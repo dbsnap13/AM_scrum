@@ -101,7 +101,7 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // editToolStripMenuItem
@@ -234,9 +234,9 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.Integration.ElementHost enhTxtBox;
-        private EnhanchedTextBox enhanchedTextBox1;
         private System.Windows.Forms.Button btnPlayPause;
         private System.Windows.Forms.Button btnStop;
+        private EnhanchedTextBox enhanchedTextBox1;
     }
 }
 

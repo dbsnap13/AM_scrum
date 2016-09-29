@@ -9,12 +9,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace TextPoint
 {
     public partial class FRMMain : Form, ITextPoint
     {
         AudioPlayer _player = new AudioPlayer("");
+
 
         #region Initialize
         public FRMMain()
@@ -25,6 +27,7 @@ namespace TextPoint
         private void FRMMain_Load(object sender, EventArgs e)
         {
             initiateExtensions();
+            enhanchedTextBox1.PreviewKeyDown += enhanchedTextBox1_PreviewKeyDown;
         }
 
         private void initiateExtensions()
@@ -190,10 +193,34 @@ namespace TextPoint
             _player.Dispose();
         }
 
+
+        void enhanchedTextBox1_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            Keys keyChar = (Keys)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (_player.SetOutput)
+            {
+                switch (keyChar)
+                {
+                    case Keys.F2:
+                        _player.PlayPause();
+                        lblCurrent.Text = _player.GetDuration();
+                        break;
+                    case Keys.F3:
+                        btnTimeStamp_Click(sender, e);
+                        break;
+                    case Keys.F4:
+                        btnRepeat_Click(sender, e);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         /// <summary>
         /// Checks whether the audio type is Mp3 or Wave, then executes relevant commands on keydowns.
         /// </summary>
-        private void FRMMain_KeyDown(object sender, KeyEventArgs e)
+        private void FRMMain_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (_player.SetOutput)
             {
@@ -213,7 +240,6 @@ namespace TextPoint
                         break;
                 }
             }
-
         }
     }
 }
