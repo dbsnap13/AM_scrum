@@ -42,11 +42,17 @@
             this.btnTimeStamp = new System.Windows.Forms.Button();
             this.lblCurrent = new System.Windows.Forms.Label();
             this.btnRepeat = new System.Windows.Forms.Button();
-            this.enhTxtBox = new System.Windows.Forms.Integration.ElementHost();
-            this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
             this.btnPlayPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
+            this.trackBar_PlayBackRate = new System.Windows.Forms.TrackBar();
+            this.trackBar_PlayBackPosition = new System.Windows.Forms.TrackBar();
+            this.label_PlayBackRate = new System.Windows.Forms.Label();
+            this.label_PlayBackPosition = new System.Windows.Forms.Label();
+            this.enhTxtBox = new System.Windows.Forms.Integration.ElementHost();
+            this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -163,15 +169,6 @@
             this.btnRepeat.UseVisualStyleBackColor = true;
             this.btnRepeat.Click += new System.EventHandler(this.btnRepeat_Click);
             // 
-            // enhTxtBox
-            // 
-            this.enhTxtBox.Location = new System.Drawing.Point(13, 28);
-            this.enhTxtBox.Name = "enhTxtBox";
-            this.enhTxtBox.Size = new System.Drawing.Size(496, 334);
-            this.enhTxtBox.TabIndex = 7;
-            this.enhTxtBox.Text = "elementHost1";
-            this.enhTxtBox.Child = this.enhanchedTextBox1;
-            // 
             // btnPlayPause
             // 
             this.btnPlayPause.Location = new System.Drawing.Point(175, 377);
@@ -192,11 +189,63 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // trackBar_PlayBackRate
+            // 
+            this.trackBar_PlayBackRate.LargeChange = 1;
+            this.trackBar_PlayBackRate.Location = new System.Drawing.Point(515, 50);
+            this.trackBar_PlayBackRate.Maximum = 4;
+            this.trackBar_PlayBackRate.Minimum = -3;
+            this.trackBar_PlayBackRate.Name = "trackBar_PlayBackRate";
+            this.trackBar_PlayBackRate.Size = new System.Drawing.Size(428, 45);
+            this.trackBar_PlayBackRate.TabIndex = 10;
+            this.trackBar_PlayBackRate.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar_PlayBackRate.Scroll += new System.EventHandler(this.trackBar_PlayBackRate_Scroll);
+            // 
+            // trackBar_PlayBackPosition
+            // 
+            this.trackBar_PlayBackPosition.Location = new System.Drawing.Point(515, 110);
+            this.trackBar_PlayBackPosition.Maximum = 100;
+            this.trackBar_PlayBackPosition.Name = "trackBar_PlayBackPosition";
+            this.trackBar_PlayBackPosition.Size = new System.Drawing.Size(428, 45);
+            this.trackBar_PlayBackPosition.TabIndex = 11;
+            this.trackBar_PlayBackPosition.Scroll += new System.EventHandler(this.trackBar_PlayBackPosition_Scroll);
+            // 
+            // label_PlayBackRate
+            // 
+            this.label_PlayBackRate.AutoSize = true;
+            this.label_PlayBackRate.Location = new System.Drawing.Point(692, 34);
+            this.label_PlayBackRate.Name = "label_PlayBackRate";
+            this.label_PlayBackRate.Size = new System.Drawing.Size(72, 13);
+            this.label_PlayBackRate.TabIndex = 12;
+            this.label_PlayBackRate.Text = "Playback rate";
+            // 
+            // label_PlayBackPosition
+            // 
+            this.label_PlayBackPosition.AutoSize = true;
+            this.label_PlayBackPosition.Location = new System.Drawing.Point(684, 94);
+            this.label_PlayBackPosition.Name = "label_PlayBackPosition";
+            this.label_PlayBackPosition.Size = new System.Drawing.Size(90, 13);
+            this.label_PlayBackPosition.TabIndex = 13;
+            this.label_PlayBackPosition.Text = "Playback position";
+            // 
+            // enhTxtBox
+            // 
+            this.enhTxtBox.Location = new System.Drawing.Point(13, 28);
+            this.enhTxtBox.Name = "enhTxtBox";
+            this.enhTxtBox.Size = new System.Drawing.Size(496, 334);
+            this.enhTxtBox.TabIndex = 7;
+            this.enhTxtBox.Text = "elementHost1";
+            this.enhTxtBox.Child = this.enhanchedTextBox1;
+            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 421);
+            this.Controls.Add(this.label_PlayBackPosition);
+            this.Controls.Add(this.label_PlayBackRate);
+            this.Controls.Add(this.trackBar_PlayBackPosition);
+            this.Controls.Add(this.trackBar_PlayBackRate);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnPlayPause);
             this.Controls.Add(this.enhTxtBox);
@@ -213,6 +262,8 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRMMain_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -237,6 +288,10 @@
         private System.Windows.Forms.Button btnPlayPause;
         private System.Windows.Forms.Button btnStop;
         private EnhanchedTextBox enhanchedTextBox1;
+        private System.Windows.Forms.TrackBar trackBar_PlayBackRate;
+        private System.Windows.Forms.TrackBar trackBar_PlayBackPosition;
+        private System.Windows.Forms.Label label_PlayBackRate;
+        private System.Windows.Forms.Label label_PlayBackPosition;
     }
 }
 

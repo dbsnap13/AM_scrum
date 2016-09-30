@@ -92,6 +92,17 @@ namespace TextPoint
             if (SetOutput)
                 Playah.controls.currentPosition = Playah.controls.currentPosition - 3;
         }
+
+        internal void SetRate(double value)
+        {
+            Playah.settings.rate = value;
+        }
+
+        internal string GetCurrentRate()
+        {
+            return Playah.settings.rate.ToString();
+        }
+
         #endregion
     }
 }

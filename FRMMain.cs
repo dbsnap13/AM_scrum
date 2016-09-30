@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -240,6 +241,43 @@ namespace TextPoint
                         break;
                 }
             }
+        }
+
+        private void trackBar_PlayBackRate_Scroll(object sender, EventArgs e)
+        {
+            _player.SetRate(ConvertRate(trackBar_PlayBackRate.Value));
+            Thread.Sleep(100); //update label properly
+            label_PlayBackRate.Text = _player.GetCurrentRate() + "x speed";
+        }
+
+        private double ConvertRate(int value)
+        {
+            switch(value)
+            {
+                case -3:
+                    return 0.25;
+                case -2:
+                    return 0.50;
+                case -1:
+                    return 0.75;
+                case 0:
+                    return 1;
+                case 1:
+                    return 1.25;
+                case 2:
+                    return 1.50;
+                case 3:
+                    return 1.75;
+                case 4:
+                    return 2;
+                default:
+                    return 1;
+            }
+        }
+
+        private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
+        {
+            
         }
     }
 }
