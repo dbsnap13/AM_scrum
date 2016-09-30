@@ -103,6 +103,11 @@ namespace TextPoint
             return Playah.settings.rate.ToString();
         }
 
+        internal int GetCurrentTimeInSeconds()
+        {
+            return (int)Playah.controls.currentPosition;
+        }
+
         #endregion
     }
 }

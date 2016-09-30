@@ -23,6 +23,9 @@ namespace TextPoint
         public FRMMain()
         {
             InitializeComponent();
+            timer1.Interval = 500;
+            timer1.Start();
+
         }
 
         private void FRMMain_Load(object sender, EventArgs e)
@@ -212,9 +215,38 @@ namespace TextPoint
                     case Keys.F4:
                         btnRepeat_Click(sender, e);
                         break;
+
+                    case Keys.Space:
+                        if (!string.IsNullOrEmpty(lastword))
+                        {
+                            lastword = string.Empty;
+                            words++;
+
+                            if (date == null)
+                            {
+                                date = DateTime.Now;
+                                timer2.Interval = 10000;
+                                timer2.Tick += Timer2_Tick;
+                                timer2.Enabled = true;
+                            }
+                        }
+                        break;
                     default:
+                        lastword += keyChar.ToString();
                         break;
                 }
+            }
+        }
+
+        private void CheckRateOK()
+        {
+            if(wordcount >= 20)
+            {
+                _player.SetRate(1.25);
+            }
+            else if(wordcount <= 10)
+            {
+                _player.SetRate(0.75);
             }
         }
 
@@ -279,6 +311,30 @@ namespace TextPoint
         {
             
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            trackBar_PlayBackPosition.Value = (int)_player.GetCurrentTimeInSeconds();
+            DisplayPosition();
+        }
+
+        private void DisplayPosition()
+        {
+            label_PlayBackPosition.Text = _player.CurrentTime();
+        }
+
+        private void Timer2_Tick(object sender, EventArgs e)
+        {
+            wordcount = words;
+            timer2.Stop();
+            CheckRateOK();
+            label1.Text = wordcount.ToString();
+        }
+
+        DateTime? date = null;
+        int words = 0;
+        int wordcount = 0;
+        string lastword = string.Empty;
     }
 }
 

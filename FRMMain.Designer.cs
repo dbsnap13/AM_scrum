@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,8 +49,12 @@
             this.trackBar_PlayBackPosition = new System.Windows.Forms.TrackBar();
             this.label_PlayBackRate = new System.Windows.Forms.Label();
             this.label_PlayBackPosition = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.checkBox_AutoPlayBackRate = new System.Windows.Forms.CheckBox();
             this.enhTxtBox = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
@@ -228,6 +233,20 @@
             this.label_PlayBackPosition.TabIndex = 13;
             this.label_PlayBackPosition.Text = "Playback position";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // checkBox_AutoPlayBackRate
+            // 
+            this.checkBox_AutoPlayBackRate.AutoSize = true;
+            this.checkBox_AutoPlayBackRate.Location = new System.Drawing.Point(545, 34);
+            this.checkBox_AutoPlayBackRate.Name = "checkBox_AutoPlayBackRate";
+            this.checkBox_AutoPlayBackRate.Size = new System.Drawing.Size(115, 17);
+            this.checkBox_AutoPlayBackRate.TabIndex = 14;
+            this.checkBox_AutoPlayBackRate.Text = "Auto playback rate";
+            this.checkBox_AutoPlayBackRate.UseVisualStyleBackColor = true;
+            // 
             // enhTxtBox
             // 
             this.enhTxtBox.Location = new System.Drawing.Point(13, 28);
@@ -237,11 +256,22 @@
             this.enhTxtBox.Text = "elementHost1";
             this.enhTxtBox.Child = this.enhanchedTextBox1;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(582, 255);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "label1";
+            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 421);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.checkBox_AutoPlayBackRate);
             this.Controls.Add(this.label_PlayBackPosition);
             this.Controls.Add(this.label_PlayBackRate);
             this.Controls.Add(this.trackBar_PlayBackPosition);
@@ -292,6 +322,10 @@
         private System.Windows.Forms.TrackBar trackBar_PlayBackPosition;
         private System.Windows.Forms.Label label_PlayBackRate;
         private System.Windows.Forms.Label label_PlayBackPosition;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox checkBox_AutoPlayBackRate;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Label label1;
     }
 }
 
