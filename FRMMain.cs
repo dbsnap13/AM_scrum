@@ -168,12 +168,12 @@ namespace TextPoint
             if (_player.SetOutput)
             {
 
-                TimeSpan time = TimeSpan.FromSeconds(_player.CurrentTimeMinutes());
+                TimeSpan time = TimeSpan.FromSeconds(_player.GetCurrentPosition());
                 string str = time.ToString(@"hh\:mm\:ss");
 
                 //string timeStamp = _player.CurrentTime();
                 lblCurrent.Text = str;
-                string formattedTimeStamp = " [" + str + "] ";
+                string formattedTimeStamp = " [Timestamp: " + str + "] ";
 
                 var selectionIndex = enhanchedTextBox1.txtBox.SelectionStart;
                 enhanchedTextBox1.txtBox.Focus();
@@ -264,7 +264,7 @@ namespace TextPoint
             {
                 _player.SetRate(1.25);
                 Thread.Sleep(100);
-                label_PlayBackRate.Text =  "Playback rate: " + _player.GetCurrentRate() + "x speed";
+                label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
                 trackBar_PlayBackRate.Value = 1;
 
 
@@ -335,6 +335,11 @@ namespace TextPoint
             }
         }
 
+        /// <summary>
+        /// Scroll event for playback position
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
         {
             _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);
@@ -347,7 +352,7 @@ namespace TextPoint
         /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
-            trackBar_PlayBackPosition.Value = _player.GetCurrentPosition();
+            trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
             DisplayPosition();
             trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
         }

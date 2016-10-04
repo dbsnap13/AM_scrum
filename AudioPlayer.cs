@@ -12,9 +12,17 @@ namespace TextPoint
     {
         WindowsMediaPlayer Playah = new WindowsMediaPlayer();
         private System.Windows.Forms.Timer tim = new System.Windows.Forms.Timer();
+
+        /// <summary>
+        /// Properties
+        /// </summary>
         public bool SetOutput { get; set; }
         public bool Repeat { get; set; }
 
+        /// <summary>
+        /// Constructor takes filename
+        /// </summary>
+        /// <param name="fileName"></param>
         public AudioPlayer(string fileName)
         {
 
@@ -38,7 +46,7 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// Returns the duration of the audiofile.
+        /// Returns the duration of the audiofile as string.
         /// </summary>
         public string GetDuration()
         {
@@ -62,6 +70,9 @@ namespace TextPoint
                 Playah.controls.play();
         }
 
+        /// <summary>
+        /// Stop
+        /// </summary>
         public void Stop()
         {
             Playah.controls.stop();
@@ -94,26 +105,40 @@ namespace TextPoint
                 tim.Dispose();
             }
         }
+        
 
         private void Tim_Tick(object sender, EventArgs e)
         {
             if (SetOutput)
                 Playah.controls.currentPosition = Playah.controls.currentPosition - 3;
         }
+        #endregion
 
+        /// <summary>
+        /// Sets a new playback rate
+        /// </summary>
+        /// <param name="value"></param>
         internal void SetRate(double value)
         {
             Playah.settings.rate = value;
         }
 
+        /// <summary>
+        /// Gets current playback speed
+        /// </summary>
+        /// <returns></returns>
         internal string GetCurrentRate()
         {
             return Playah.settings.rate.ToString();
         }
 
-        internal int GetCurrentPosition()
+        /// <summary>
+        /// Gets the current position/timestamp of the audio
+        /// </summary>
+        /// <returns></returns>
+        internal double GetCurrentPosition()
         {
-            return (int)Playah.controls.currentPosition;
+            return Playah.controls.currentPosition;
         }
 
         /// <summary>
@@ -133,12 +158,5 @@ namespace TextPoint
         {
             return Playah.currentMedia.duration;
         }
-
-        internal double CurrentTimeMinutes()
-        {
-            return Playah.controls.currentPosition;
-        }
-
-        #endregion
     }
 }

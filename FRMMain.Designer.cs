@@ -218,7 +218,7 @@
             // label_PlayBackRate
             // 
             this.label_PlayBackRate.AutoSize = true;
-            this.label_PlayBackRate.Location = new System.Drawing.Point(692, 34);
+            this.label_PlayBackRate.Location = new System.Drawing.Point(684, 34);
             this.label_PlayBackRate.Name = "label_PlayBackRate";
             this.label_PlayBackRate.Size = new System.Drawing.Size(121, 13);
             this.label_PlayBackRate.TabIndex = 12;
@@ -250,7 +250,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(582, 255);
+            this.label1.Location = new System.Drawing.Point(512, 258);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 15;
@@ -258,9 +258,9 @@
             // 
             // elementHost1
             // 
-            this.elementHost1.Location = new System.Drawing.Point(13, 34);
+            this.elementHost1.Location = new System.Drawing.Point(13, 50);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(429, 293);
+            this.elementHost1.Size = new System.Drawing.Size(402, 266);
             this.elementHost1.TabIndex = 16;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
