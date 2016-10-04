@@ -17,10 +17,16 @@ namespace TextPoint
 
         public AudioPlayer(string fileName)
         {
+
+            Playah.settings.autoStart = false; //disable the autostart upon load, gets enabled trough PlayPause() below.
             if (fileName == "")
                 SetOutput = false;
             else
+            {
                 Playah.URL = fileName;
+                
+            }
+                
         }
 
         /// <summary>
@@ -52,6 +58,8 @@ namespace TextPoint
             {
                 Playah.controls.pause();
             }
+            else if (!string.IsNullOrEmpty(Playah.URL) && Playah.settings.autoStart == false)
+                Playah.controls.play();
         }
 
         public void Stop()
@@ -103,9 +111,32 @@ namespace TextPoint
             return Playah.settings.rate.ToString();
         }
 
-        internal int GetCurrentTimeInSeconds()
+        internal int GetCurrentPosition()
         {
             return (int)Playah.controls.currentPosition;
+        }
+
+        /// <summary>
+        /// Method used by the trackbar scroll to move position
+        /// </summary>
+        /// <param name="value"></param>
+        internal void SetCurrentPosition(double value)
+        {
+            Playah.controls.currentPosition = value;
+        }
+
+        /// <summary>
+        /// Gets the duration of the audio file, used to by the trackbar to resize.
+        /// </summary>
+        /// <returns></returns>
+        internal double GetDurationDouble()
+        {
+            return Playah.currentMedia.duration;
+        }
+
+        internal double CurrentTimeMinutes()
+        {
+            return Playah.controls.currentPosition;
         }
 
         #endregion

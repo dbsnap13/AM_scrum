@@ -16,6 +16,12 @@ namespace TextPoint
 {
     public partial class FRMMain : Form, ITextPoint
     {
+        //variabes for auto speed adjustment
+        DateTime? date = null;
+        int words = 0;
+        int wordcount = 0;
+        string lastword = string.Empty;
+
         AudioPlayer _player = new AudioPlayer("");
 
 
@@ -23,9 +29,6 @@ namespace TextPoint
         public FRMMain()
         {
             InitializeComponent();
-            timer1.Interval = 500;
-            timer1.Start();
-
         }
 
         private void FRMMain_Load(object sender, EventArgs e)
@@ -112,6 +115,11 @@ namespace TextPoint
             }
         }
 
+        private void UpdateTrackBarLength(int lenght)
+        {
+            trackBar_PlayBackPosition.Maximum = lenght;
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -159,9 +167,13 @@ namespace TextPoint
         {
             if (_player.SetOutput)
             {
-                string timeStamp = _player.CurrentTime();
-                lblCurrent.Text = timeStamp;
-                string formattedTimeStamp = " {" + timeStamp + "} ";
+
+                TimeSpan time = TimeSpan.FromSeconds(_player.CurrentTimeMinutes());
+                string str = time.ToString(@"hh\:mm\:ss");
+
+                //string timeStamp = _player.CurrentTime();
+                lblCurrent.Text = str;
+                string formattedTimeStamp = " [" + str + "] ";
 
                 var selectionIndex = enhanchedTextBox1.txtBox.SelectionStart;
                 enhanchedTextBox1.txtBox.Focus();
@@ -181,11 +193,16 @@ namespace TextPoint
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
             _player.PlayPause();
+            timer1.Interval = 500;
+            timer1.Start();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             _player.Stop();
+            timer1.Stop();
+            label_PlayBackPosition.Text = "Playback position: 00:00";
+            trackBar_PlayBackPosition.Value = 0;
         }
         #endregion
 
@@ -238,15 +255,26 @@ namespace TextPoint
             }
         }
 
+        /// <summary>
+        /// Used when on auto speed. NEED TO improve code..
+        /// </summary>
         private void CheckRateOK()
         {
-            if(wordcount >= 20)
+            if(wordcount >= 10)
             {
                 _player.SetRate(1.25);
+                Thread.Sleep(100);
+                label_PlayBackRate.Text =  "Playback rate: " + _player.GetCurrentRate() + "x speed";
+                trackBar_PlayBackRate.Value = 1;
+
+
             }
-            else if(wordcount <= 10)
+            else if(wordcount <= 5)
             {
                 _player.SetRate(0.75);
+                Thread.Sleep(100);
+                label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
+                trackBar_PlayBackRate.Value = -1;
             }
         }
 
@@ -279,7 +307,7 @@ namespace TextPoint
         {
             _player.SetRate(ConvertRate(trackBar_PlayBackRate.Value));
             Thread.Sleep(100); //update label properly
-            label_PlayBackRate.Text = _player.GetCurrentRate() + "x speed";
+            label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
         }
 
         private double ConvertRate(int value)
@@ -309,32 +337,43 @@ namespace TextPoint
 
         private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
         {
-            
+            _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);
         }
 
+        /// <summary>
+        /// Timer event for the position of trackbar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
-            trackBar_PlayBackPosition.Value = (int)_player.GetCurrentTimeInSeconds();
+            trackBar_PlayBackPosition.Value = _player.GetCurrentPosition();
             DisplayPosition();
+            trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
         }
 
+        /// <summary>
+        /// Displays the position on label
+        /// </summary>
         private void DisplayPosition()
         {
-            label_PlayBackPosition.Text = _player.CurrentTime();
+            label_PlayBackPosition.Text = "Playback position: " + _player.CurrentTime();
         }
 
+        /// <summary>
+        /// Timer event used for auto speed adjustment
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer2_Tick(object sender, EventArgs e)
         {
             wordcount = words;
-            timer2.Stop();
+            //timer2.Stop();
             CheckRateOK();
-            label1.Text = wordcount.ToString();
+            label1.Text = "Word count: " + wordcount.ToString() + "per 10 sec";
+            wordcount = 0;
+            words = 0;
         }
-
-        DateTime? date = null;
-        int words = 0;
-        int wordcount = 0;
-        string lastword = string.Empty;
     }
 }
 
