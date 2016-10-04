@@ -66,6 +66,31 @@ namespace TextPoint
         #endregion
 
         #region ToolStripMenu
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnPlayPause.PerformClick();
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnPlayPause.PerformClick();
+        }
+
+        private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnRepeat.PerformClick();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnStop.PerformClick();
+        }
+
+        private void timestampToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnTimeStamp.PerformClick();
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -223,14 +248,21 @@ namespace TextPoint
                 switch (keyChar)
                 {
                     case Keys.F2:
-                        _player.PlayPause();
-                        lblCurrent.Text = _player.GetDuration();
+                        btnPlayPause.PerformClick();
+                        //_player.PlayPause();
+                        //lblCurrent.Text = _player.GetDuration();
                         break;
                     case Keys.F3:
-                        btnTimeStamp_Click(sender, e);
+                        btnTimeStamp.PerformClick();
+                        //btnTimeStamp_Click(sender, e);
                         break;
                     case Keys.F4:
-                        btnRepeat_Click(sender, e);
+                        btnStop.PerformClick();
+                        //btnRepeat_Click(sender, e);
+                        break;
+
+                    case Keys.F5:
+                        btnStop.PerformClick();
                         break;
 
                     case Keys.Space:
@@ -288,14 +320,20 @@ namespace TextPoint
                 switch (e.KeyCode)
                 {
                     case Keys.F2:
-                        _player.PlayPause();
-                        lblCurrent.Text = _player.GetDuration();
+                        btnPlayPause.PerformClick();
+                        //_player.PlayPause();
+                        //lblCurrent.Text = _player.GetDuration();
                         break;
                     case Keys.F3:
-                        btnTimeStamp_Click(sender, e);
+                        //btnTimeStamp_Click(sender, e);
+                        btnTimeStamp.PerformClick();
                         break;
                     case Keys.F4:
-                        btnRepeat_Click(sender, e);
+                        //btnRepeat_Click(sender, e);
+                        btnRepeat.PerformClick();
+                        break;
+                    case Keys.F5:
+                        btnStop.PerformClick();
                         break;
                     default:
                         break;
