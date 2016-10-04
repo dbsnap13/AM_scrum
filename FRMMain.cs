@@ -16,6 +16,7 @@ namespace TextPoint
 {
     public partial class FRMMain : Form, ITextPoint
     {
+        //test
         //variabes for auto speed adjustment
         DateTime? date = null;
         int words = 0;
