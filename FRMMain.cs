@@ -117,6 +117,7 @@ namespace TextPoint
                 Clipboard.SetData(DataFormats.Text, enhanchedTextBox1.txtBox.SelectedText);
             enhanchedTextBox1.txtBox.SelectedText = string.Empty;
         }
+
         #endregion
 
         /// <summary>
@@ -418,6 +419,7 @@ namespace TextPoint
             wordcount = 0;
             words = 0;
         }
+
     }
 }
 

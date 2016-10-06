@@ -36,10 +36,17 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timestampToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTimeStamp = new System.Windows.Forms.Button();
             this.lblCurrent = new System.Windows.Forms.Label();
             this.btnRepeat = new System.Windows.Forms.Button();
@@ -53,13 +60,10 @@
             this.checkBox_AutoPlayBackRate = new System.Windows.Forms.CheckBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timestampToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip_btnPlayPause = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_btnStop = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_btnRepeat = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_btnTimeStamp = new System.Windows.Forms.ToolTip(this.components);
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
             this.menuStrip1.SuspendLayout();
@@ -76,7 +80,7 @@
             this.audioToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(955, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(445, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "File";
             // 
@@ -125,6 +129,12 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
+            // fontToolStripMenuItem
+            // 
+            this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.fontToolStripMenuItem.Text = "Font";
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -134,6 +144,13 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.cutToolStripMenuItem.Text = "Cut         (Ctrl + X)";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
@@ -148,123 +165,6 @@
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.pasteToolStripMenuItem.Text = "Paste      (Ctrl + V)";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.cutToolStripMenuItem.Text = "Cut         (Ctrl + X)";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-            // 
-            // btnTimeStamp
-            // 
-            this.btnTimeStamp.Location = new System.Drawing.Point(13, 377);
-            this.btnTimeStamp.Name = "btnTimeStamp";
-            this.btnTimeStamp.Size = new System.Drawing.Size(75, 23);
-            this.btnTimeStamp.TabIndex = 2;
-            this.btnTimeStamp.Text = "Timestamp";
-            this.btnTimeStamp.UseVisualStyleBackColor = true;
-            this.btnTimeStamp.Click += new System.EventHandler(this.btnTimeStamp_Click);
-            // 
-            // lblCurrent
-            // 
-            this.lblCurrent.AutoSize = true;
-            this.lblCurrent.Location = new System.Drawing.Point(498, 356);
-            this.lblCurrent.Name = "lblCurrent";
-            this.lblCurrent.Size = new System.Drawing.Size(0, 13);
-            this.lblCurrent.TabIndex = 3;
-            // 
-            // btnRepeat
-            // 
-            this.btnRepeat.Location = new System.Drawing.Point(94, 377);
-            this.btnRepeat.Name = "btnRepeat";
-            this.btnRepeat.Size = new System.Drawing.Size(75, 23);
-            this.btnRepeat.TabIndex = 6;
-            this.btnRepeat.Text = "Repeat";
-            this.btnRepeat.UseVisualStyleBackColor = true;
-            this.btnRepeat.Click += new System.EventHandler(this.btnRepeat_Click);
-            // 
-            // btnPlayPause
-            // 
-            this.btnPlayPause.Location = new System.Drawing.Point(175, 377);
-            this.btnPlayPause.Name = "btnPlayPause";
-            this.btnPlayPause.Size = new System.Drawing.Size(75, 23);
-            this.btnPlayPause.TabIndex = 8;
-            this.btnPlayPause.Text = "Play/Pause";
-            this.btnPlayPause.UseVisualStyleBackColor = true;
-            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.Location = new System.Drawing.Point(256, 377);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 9;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // trackBar_PlayBackRate
-            // 
-            this.trackBar_PlayBackRate.LargeChange = 1;
-            this.trackBar_PlayBackRate.Location = new System.Drawing.Point(515, 50);
-            this.trackBar_PlayBackRate.Maximum = 4;
-            this.trackBar_PlayBackRate.Minimum = -3;
-            this.trackBar_PlayBackRate.Name = "trackBar_PlayBackRate";
-            this.trackBar_PlayBackRate.Size = new System.Drawing.Size(428, 45);
-            this.trackBar_PlayBackRate.TabIndex = 10;
-            this.trackBar_PlayBackRate.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackBar_PlayBackRate.Scroll += new System.EventHandler(this.trackBar_PlayBackRate_Scroll);
-            // 
-            // trackBar_PlayBackPosition
-            // 
-            this.trackBar_PlayBackPosition.Location = new System.Drawing.Point(515, 110);
-            this.trackBar_PlayBackPosition.Maximum = 100;
-            this.trackBar_PlayBackPosition.Name = "trackBar_PlayBackPosition";
-            this.trackBar_PlayBackPosition.Size = new System.Drawing.Size(428, 45);
-            this.trackBar_PlayBackPosition.TabIndex = 11;
-            this.trackBar_PlayBackPosition.Scroll += new System.EventHandler(this.trackBar_PlayBackPosition_Scroll);
-            // 
-            // label_PlayBackRate
-            // 
-            this.label_PlayBackRate.AutoSize = true;
-            this.label_PlayBackRate.Location = new System.Drawing.Point(684, 34);
-            this.label_PlayBackRate.Name = "label_PlayBackRate";
-            this.label_PlayBackRate.Size = new System.Drawing.Size(121, 13);
-            this.label_PlayBackRate.TabIndex = 12;
-            this.label_PlayBackRate.Text = "Playback rate: 1x speed";
-            // 
-            // label_PlayBackPosition
-            // 
-            this.label_PlayBackPosition.AutoSize = true;
-            this.label_PlayBackPosition.Location = new System.Drawing.Point(684, 94);
-            this.label_PlayBackPosition.Name = "label_PlayBackPosition";
-            this.label_PlayBackPosition.Size = new System.Drawing.Size(123, 13);
-            this.label_PlayBackPosition.TabIndex = 13;
-            this.label_PlayBackPosition.Text = "Playback position: 00:00";
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // checkBox_AutoPlayBackRate
-            // 
-            this.checkBox_AutoPlayBackRate.AutoSize = true;
-            this.checkBox_AutoPlayBackRate.Location = new System.Drawing.Point(545, 34);
-            this.checkBox_AutoPlayBackRate.Name = "checkBox_AutoPlayBackRate";
-            this.checkBox_AutoPlayBackRate.Size = new System.Drawing.Size(115, 17);
-            this.checkBox_AutoPlayBackRate.TabIndex = 14;
-            this.checkBox_AutoPlayBackRate.Text = "Auto playback rate";
-            this.checkBox_AutoPlayBackRate.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(512, 258);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "label1";
             // 
             // audioToolStripMenuItem
             // 
@@ -292,6 +192,13 @@
             this.pauseToolStripMenuItem.Text = "Pause             (F2)";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
+            // repeatToolStripMenuItem
+            // 
+            this.repeatToolStripMenuItem.Name = "repeatToolStripMenuItem";
+            this.repeatToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.repeatToolStripMenuItem.Text = "Repeat           (F4)";
+            this.repeatToolStripMenuItem.Click += new System.EventHandler(this.repeatToolStripMenuItem_Click);
+            // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
@@ -306,24 +213,131 @@
             this.timestampToolStripMenuItem.Text = "Timestamp   (F3)";
             this.timestampToolStripMenuItem.Click += new System.EventHandler(this.timestampToolStripMenuItem_Click);
             // 
-            // fontToolStripMenuItem
+            // btnTimeStamp
             // 
-            this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.fontToolStripMenuItem.Text = "Font";
+            this.btnTimeStamp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnTimeStamp.Location = new System.Drawing.Point(12, 372);
+            this.btnTimeStamp.Name = "btnTimeStamp";
+            this.btnTimeStamp.Size = new System.Drawing.Size(68, 23);
+            this.btnTimeStamp.TabIndex = 2;
+            this.btnTimeStamp.Text = "Timestamp";
+            this.toolTip_btnTimeStamp.SetToolTip(this.btnTimeStamp, "Timestamp (F3)");
+            this.btnTimeStamp.UseVisualStyleBackColor = true;
+            this.btnTimeStamp.Click += new System.EventHandler(this.btnTimeStamp_Click);
             // 
-            // repeatToolStripMenuItem
+            // lblCurrent
             // 
-            this.repeatToolStripMenuItem.Name = "repeatToolStripMenuItem";
-            this.repeatToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.repeatToolStripMenuItem.Text = "Repeat           (F4)";
-            this.repeatToolStripMenuItem.Click += new System.EventHandler(this.repeatToolStripMenuItem_Click);
+            this.lblCurrent.AutoSize = true;
+            this.lblCurrent.Location = new System.Drawing.Point(354, 356);
+            this.lblCurrent.Name = "lblCurrent";
+            this.lblCurrent.Size = new System.Drawing.Size(0, 13);
+            this.lblCurrent.TabIndex = 3;
+            // 
+            // btnRepeat
+            // 
+            this.btnRepeat.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnRepeat.Location = new System.Drawing.Point(86, 372);
+            this.btnRepeat.Name = "btnRepeat";
+            this.btnRepeat.Size = new System.Drawing.Size(68, 23);
+            this.btnRepeat.TabIndex = 6;
+            this.btnRepeat.Text = "Repeat";
+            this.toolTip_btnRepeat.SetToolTip(this.btnRepeat, "Repeat (F4)");
+            this.btnRepeat.UseVisualStyleBackColor = true;
+            this.btnRepeat.Click += new System.EventHandler(this.btnRepeat_Click);
+            // 
+            // btnPlayPause
+            // 
+            this.btnPlayPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnPlayPause.Location = new System.Drawing.Point(160, 372);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(72, 23);
+            this.btnPlayPause.TabIndex = 8;
+            this.btnPlayPause.Text = "Play/Pause";
+            this.toolTip_btnPlayPause.SetToolTip(this.btnPlayPause, "Play (F2)");
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnStop.Location = new System.Drawing.Point(238, 372);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(72, 23);
+            this.btnStop.TabIndex = 9;
+            this.btnStop.Text = "Stop";
+            this.toolTip_btnStop.SetToolTip(this.btnStop, "Stop (F5)");
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // trackBar_PlayBackRate
+            // 
+            this.trackBar_PlayBackRate.LargeChange = 1;
+            this.trackBar_PlayBackRate.Location = new System.Drawing.Point(12, 431);
+            this.trackBar_PlayBackRate.Maximum = 4;
+            this.trackBar_PlayBackRate.Minimum = -3;
+            this.trackBar_PlayBackRate.Name = "trackBar_PlayBackRate";
+            this.trackBar_PlayBackRate.Size = new System.Drawing.Size(428, 45);
+            this.trackBar_PlayBackRate.TabIndex = 10;
+            this.trackBar_PlayBackRate.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar_PlayBackRate.Scroll += new System.EventHandler(this.trackBar_PlayBackRate_Scroll);
+            // 
+            // trackBar_PlayBackPosition
+            // 
+            this.trackBar_PlayBackPosition.Location = new System.Drawing.Point(12, 504);
+            this.trackBar_PlayBackPosition.Maximum = 100;
+            this.trackBar_PlayBackPosition.Name = "trackBar_PlayBackPosition";
+            this.trackBar_PlayBackPosition.Size = new System.Drawing.Size(428, 45);
+            this.trackBar_PlayBackPosition.TabIndex = 11;
+            this.trackBar_PlayBackPosition.Scroll += new System.EventHandler(this.trackBar_PlayBackPosition_Scroll);
+            // 
+            // label_PlayBackRate
+            // 
+            this.label_PlayBackRate.AutoSize = true;
+            this.label_PlayBackRate.Location = new System.Drawing.Point(21, 415);
+            this.label_PlayBackRate.Name = "label_PlayBackRate";
+            this.label_PlayBackRate.Size = new System.Drawing.Size(121, 13);
+            this.label_PlayBackRate.TabIndex = 12;
+            this.label_PlayBackRate.Text = "Playback rate: 1x speed";
+            // 
+            // label_PlayBackPosition
+            // 
+            this.label_PlayBackPosition.AutoSize = true;
+            this.label_PlayBackPosition.Location = new System.Drawing.Point(21, 488);
+            this.label_PlayBackPosition.Name = "label_PlayBackPosition";
+            this.label_PlayBackPosition.Size = new System.Drawing.Size(123, 13);
+            this.label_PlayBackPosition.TabIndex = 13;
+            this.label_PlayBackPosition.Text = "Playback position: 00:00";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // checkBox_AutoPlayBackRate
+            // 
+            this.checkBox_AutoPlayBackRate.AutoSize = true;
+            this.checkBox_AutoPlayBackRate.Location = new System.Drawing.Point(212, 414);
+            this.checkBox_AutoPlayBackRate.Name = "checkBox_AutoPlayBackRate";
+            this.checkBox_AutoPlayBackRate.Size = new System.Drawing.Size(115, 17);
+            this.checkBox_AutoPlayBackRate.TabIndex = 14;
+            this.checkBox_AutoPlayBackRate.Text = "Auto playback rate";
+            this.checkBox_AutoPlayBackRate.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(365, 382);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "label1";
             // 
             // elementHost1
             // 
-            this.elementHost1.Location = new System.Drawing.Point(13, 50);
+            this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementHost1.Location = new System.Drawing.Point(12, 27);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(402, 266);
+            this.elementHost1.Size = new System.Drawing.Size(421, 307);
             this.elementHost1.TabIndex = 16;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
@@ -332,7 +346,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(955, 421);
+            this.ClientSize = new System.Drawing.Size(445, 561);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBox_AutoPlayBackRate);
@@ -348,6 +362,7 @@
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(461, 600);
             this.Name = "FRMMain";
             this.Text = "TextPoint";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FRMMain_FormClosing);
@@ -396,6 +411,10 @@
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timestampToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repeatToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip_btnPlayPause;
+        private System.Windows.Forms.ToolTip toolTip_btnStop;
+        private System.Windows.Forms.ToolTip toolTip_btnRepeat;
+        private System.Windows.Forms.ToolTip toolTip_btnTimeStamp;
     }
 }
 

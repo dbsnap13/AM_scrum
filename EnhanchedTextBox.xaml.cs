@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,10 @@ namespace TextPoint
     /// </summary>
     public partial class EnhanchedTextBox : UserControl
     {
+        public bool GetSetBool { get; set; }
+        public bool GetSetUnderLine { get; set; }
+        public bool GetSetItalic { get; set; }
+
         public EnhanchedTextBox()
         {
             InitializeComponent();
@@ -27,6 +32,36 @@ namespace TextPoint
 
         private void txtBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
+        }
+
+        public void AdjustBool()
+        {
+            if (!GetSetBool)
+            {
+                txtBox.FontWeight = FontWeights.Normal;
+            }
+            else
+                txtBox.FontWeight = FontWeights.Bold;
+        }
+
+        public void AdjustUnderLine()
+        {
+            if (!GetSetUnderLine)
+            {
+                txtBox.TextDecorations = null;
+            }
+            else
+                txtBox.TextDecorations = TextDecorations.Underline;
+        }
+
+        public void AdjustItalic()
+        {
+            if (!GetSetItalic)
+            {
+                txtBox.FontStyle = FontStyles.Italic;
+            }
+            else
+                txtBox.FontStyle = FontStyles.Normal;
         }
     }
 }
