@@ -56,7 +56,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AudioPlayer.cs" />
+    <Compile Include="AudioPlayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="EnhanchedTextBox.xaml.cs">
       <DependentUpon>EnhanchedTextBox.xaml</DependentUpon>
     </Compile>

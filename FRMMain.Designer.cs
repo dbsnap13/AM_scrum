@@ -83,6 +83,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(445, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "File";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -126,7 +127,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fontToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // fontToolStripMenuItem
@@ -279,7 +280,6 @@
             this.trackBar_PlayBackRate.Size = new System.Drawing.Size(428, 45);
             this.trackBar_PlayBackRate.TabIndex = 10;
             this.trackBar_PlayBackRate.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackBar_PlayBackRate.Scroll += new System.EventHandler(this.trackBar_PlayBackRate_Scroll);
             // 
             // trackBar_PlayBackPosition
             // 
@@ -288,7 +288,6 @@
             this.trackBar_PlayBackPosition.Name = "trackBar_PlayBackPosition";
             this.trackBar_PlayBackPosition.Size = new System.Drawing.Size(428, 45);
             this.trackBar_PlayBackPosition.TabIndex = 11;
-            this.trackBar_PlayBackPosition.Scroll += new System.EventHandler(this.trackBar_PlayBackPosition_Scroll);
             // 
             // label_PlayBackRate
             // 
@@ -307,10 +306,6 @@
             this.label_PlayBackPosition.Size = new System.Drawing.Size(123, 13);
             this.label_PlayBackPosition.TabIndex = 13;
             this.label_PlayBackPosition.Text = "Playback position: 00:00";
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // checkBox_AutoPlayBackRate
             // 
@@ -367,7 +362,6 @@
             this.Text = "TextPoint";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FRMMain_FormClosing);
             this.Load += new System.EventHandler(this.FRMMain_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRMMain_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).EndInit();

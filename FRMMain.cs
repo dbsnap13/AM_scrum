@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -100,41 +101,47 @@ namespace TextPoint
         #region Cut, copy & paste Edit Menu
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (enhanchedTextBox1.txtBox.SelectedText != string.Empty)
-                Clipboard.SetData(DataFormats.Text, enhanchedTextBox1.txtBox.SelectedText);
+            if (enhanchedTextBox1.txtBox.Selection.Text != string.Empty)
+                enhanchedTextBox1.txtBox.Copy();
+
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int position = enhanchedTextBox1.txtBox.SelectionStart;
-            enhanchedTextBox1.txtBox.Text = enhanchedTextBox1.txtBox.Text.Insert(position, Clipboard.GetText());
-            enhanchedTextBox1.txtBox.SelectionStart = enhanchedTextBox1.txtBox.Text.Length -1;
+            enhanchedTextBox1.txtBox.Paste();
+            enhanchedTextBox1.txtBox.CaretPosition = enhanchedTextBox1.txtBox.Selection.End;
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (enhanchedTextBox1.txtBox.SelectedText != string.Empty)
-                Clipboard.SetData(DataFormats.Text, enhanchedTextBox1.txtBox.SelectedText);
-            enhanchedTextBox1.txtBox.SelectedText = string.Empty;
+            if (enhanchedTextBox1.txtBox.Selection.Text != string.Empty)
+                enhanchedTextBox1.txtBox.Cut();
+
         }
 
         #endregion
 
         /// <summary>
-        /// Allows a user to open a file of the type Wave, Text or Mp3.
+        /// CAN ONLY OPEN RTF AND MAYBE SOME SOUND FILES I DONT KNOW BECUASE SCHOOL COMP NO HAVE WMP
         /// </summary>
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Wave File (*.wav)|*.wav| Text files (*.txt)|*.txt| Mp3 File (*.mp3)|*.mp3";
+            ofd.Filter = "All files (*.*)|*.*";
             ofd.CheckFileExists = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                if (ofd.FileName.Contains("txt"))
+                //string format = Path.GetExtension(ofd.FileName);
+                if (ofd.FileName.Contains("rtf"))
                 {
-                    enhanchedTextBox1.txtBox.Text = File.ReadAllText(ofd.FileName);
+                    TextRange range;
+                    FileStream fStream;
+                    range = new TextRange(enhanchedTextBox1.txtBox.Document.ContentStart, enhanchedTextBox1.txtBox.Document.ContentEnd);
+                    fStream = new FileStream(ofd.FileName, FileMode.Open);
+                    range.Load(fStream, DataFormats.Rtf);
+                    fStream.Close();
                 }
-                else if (ofd.FileName.Contains("wav")||ofd.FileName.Contains("mp3"))
+                else if (ofd.FileName.Contains("wav") || ofd.FileName.Contains("mp3"))
                 {
                     _player = new AudioPlayer(ofd.FileName);
                     _player.SetOutput = true;
@@ -142,19 +149,24 @@ namespace TextPoint
             }
         }
 
-        private void UpdateTrackBarLength(int lenght)
+        private void UpdateTrackBarLength(int length)
         {
-            trackBar_PlayBackPosition.Maximum = lenght;
+            trackBar_PlayBackPosition.Maximum = length;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Text files (*.txt)|*.txt| Rich Text Files|*.rtf | Microsoft Document|*.doc";
+            sfd.Filter = "Rich Text Files|*.rtf";
             sfd.CheckPathExists = true;
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(sfd.FileName, enhanchedTextBox1.txtBox.Text);
+                TextRange range;
+                FileStream fStream;
+                range = new TextRange(enhanchedTextBox1.txtBox.Document.ContentStart, enhanchedTextBox1.txtBox.Document.ContentEnd);
+                fStream = new FileStream(sfd.FileName, FileMode.Create);
+                range.Save(fStream, DataFormats.Rtf);
+                fStream.Close();
             }
         }
         #endregion
@@ -177,12 +189,13 @@ namespace TextPoint
 
         public string GetText()
         {
-            return enhanchedTextBox1.txtBox.Text;
+            throw new NotImplementedException();
+            //return enhanchedTextBox1.txtBox.Text;
         }
 
         public void SetText(string text)
         {
-            enhanchedTextBox1.txtBox.Text = text;
+            //enhanchedTextBox1.txtBox.Text = text;
         }
         #endregion
 
@@ -198,14 +211,12 @@ namespace TextPoint
                 TimeSpan time = TimeSpan.FromSeconds(_player.GetCurrentPosition());
                 string str = time.ToString(@"hh\:mm\:ss");
 
-                //string timeStamp = _player.CurrentTime();
+                string timeStamp = _player.CurrentTime();
                 lblCurrent.Text = str;
                 string formattedTimeStamp = " [Timestamp: " + str + "] ";
 
-                var selectionIndex = enhanchedTextBox1.txtBox.SelectionStart;
-                enhanchedTextBox1.txtBox.Focus();
-                enhanchedTextBox1.txtBox.Text = enhanchedTextBox1.txtBox.Text.Insert(selectionIndex, formattedTimeStamp);
-                enhanchedTextBox1.txtBox.SelectionStart = enhanchedTextBox1.txtBox.Text.Length - 1;
+                enhanchedTextBox1.txtBox.CaretPosition.InsertTextInRun(formattedTimeStamp);
+                enhanchedTextBox1.txtBox.CaretPosition = enhanchedTextBox1.txtBox.Selection.End;
             }
         }
 
@@ -294,7 +305,7 @@ namespace TextPoint
         /// </summary>
         private void CheckRateOK()
         {
-            if(wordcount >= 10)
+            if (wordcount >= 10)
             {
                 _player.SetRate(1.25);
                 Thread.Sleep(100);
@@ -303,7 +314,7 @@ namespace TextPoint
 
 
             }
-            else if(wordcount <= 5)
+            else if (wordcount <= 5)
             {
                 _player.SetRate(0.75);
                 Thread.Sleep(100);
@@ -378,8 +389,8 @@ namespace TextPoint
         /// <summary>
         /// Scroll event for playback position
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
         private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
         {
             _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);
@@ -389,7 +400,7 @@ namespace TextPoint
         /// Timer event for the position of trackbar
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        ///// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
             trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
@@ -413,13 +424,12 @@ namespace TextPoint
         private void Timer2_Tick(object sender, EventArgs e)
         {
             wordcount = words;
-            //timer2.Stop();
+            timer2.Stop();
             CheckRateOK();
             label1.Text = "Word count: " + wordcount.ToString() + "per 10 sec";
             wordcount = 0;
             words = 0;
         }
-
     }
 }
 
