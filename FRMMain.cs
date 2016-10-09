@@ -36,7 +36,7 @@ namespace TextPoint
         private void FRMMain_Load(object sender, EventArgs e)
         {
             initiateExtensions();
-            enhanchedTextBox1.PreviewKeyDown += enhanchedTextBox1_PreviewKeyDown;
+            enhanchedTextBox1.PreviewKeyDown += EnhanchedTextBox1_PreviewKeyDown;
         }
 
         private void initiateExtensions()
@@ -146,6 +146,8 @@ namespace TextPoint
                     _player = new AudioPlayer(ofd.FileName);
                     _player.SetOutput = true;
                 }
+
+                enhanchedTextBox1.txtBox.Focus();
             }
         }
 
@@ -207,16 +209,13 @@ namespace TextPoint
         {
             if (_player.SetOutput)
             {
-
                 TimeSpan time = TimeSpan.FromSeconds(_player.GetCurrentPosition());
-                string str = time.ToString(@"hh\:mm\:ss");
-
-                string timeStamp = _player.CurrentTime();
-                lblCurrent.Text = str;
-                string formattedTimeStamp = " [Timestamp: " + str + "] ";
+                lblCurrent.Text = time.ToString(@"hh\:mm\:ss");
+                string formattedTimeStamp = " (Timestamp: " + time.ToString(@"hh\:mm\:ss") + ") ";
 
                 enhanchedTextBox1.txtBox.CaretPosition.InsertTextInRun(formattedTimeStamp);
                 enhanchedTextBox1.txtBox.CaretPosition = enhanchedTextBox1.txtBox.Selection.End;
+                enhanchedTextBox1.txtBox.Focus();
             }
         }
 
@@ -225,14 +224,32 @@ namespace TextPoint
         /// </summary>
         private void btnRepeat_Click(object sender, EventArgs e)
         {
-            _player.EnableOrDisableTimer();
+            if (Int32.Parse(txtBoxUserSec.Text) > 0)
+            {
+                _player.EnableOrDisableTimer(Int32.Parse(txtBoxUserSec.Text));
+            }
+            else
+            {
+                MessageBox.Show("Enter a valid number", "You must enter a digit larger than 0.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            enhanchedTextBox1.txtBox.Focus();
         }
 
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
             _player.PlayPause();
             timer1.Interval = 500;
+            timer1.Tick += Timer1_Tick;       
             timer1.Start();
+            enhanchedTextBox1.txtBox.Focus();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
+            DisplayPosition();
+            trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
+            enhanchedTextBox1.txtBox.Focus();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -241,6 +258,7 @@ namespace TextPoint
             timer1.Stop();
             label_PlayBackPosition.Text = "Playback position: 00:00";
             trackBar_PlayBackPosition.Value = 0;
+            enhanchedTextBox1.txtBox.Focus();
         }
         #endregion
 
@@ -253,7 +271,7 @@ namespace TextPoint
         }
 
 
-        void enhanchedTextBox1_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void EnhanchedTextBox1_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             Keys keyChar = (Keys)KeyInterop.VirtualKeyFromKey(e.Key);
             if (_player.SetOutput)
@@ -311,8 +329,6 @@ namespace TextPoint
                 Thread.Sleep(100);
                 label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
                 trackBar_PlayBackRate.Value = 1;
-
-
             }
             else if (wordcount <= 5)
             {
@@ -324,7 +340,7 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// Checks whether the audio type is Mp3 or Wave, then executes relevant commands on keydowns.
+        /// REMOVE THIS????
         /// </summary>
         private void FRMMain_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
@@ -359,6 +375,7 @@ namespace TextPoint
             _player.SetRate(ConvertRate(trackBar_PlayBackRate.Value));
             Thread.Sleep(100); //update label properly
             label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
+            enhanchedTextBox1.txtBox.Focus();
         }
 
         private double ConvertRate(int value)
@@ -389,8 +406,6 @@ namespace TextPoint
         /// <summary>
         /// Scroll event for playback position
         /// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
         private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
         {
             _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);
@@ -399,13 +414,9 @@ namespace TextPoint
         /// <summary>
         /// Timer event for the position of trackbar
         /// </summary>
-        /// <param name="sender"></param>
-        ///// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
-            trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
-            DisplayPosition();
-            trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
+
         }
 
         /// <summary>
@@ -419,8 +430,6 @@ namespace TextPoint
         /// <summary>
         /// Timer event used for auto speed adjustment
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Timer2_Tick(object sender, EventArgs e)
         {
             wordcount = words;
@@ -429,6 +438,24 @@ namespace TextPoint
             label1.Text = "Word count: " + wordcount.ToString() + "per 10 sec";
             wordcount = 0;
             words = 0;
+        }
+
+        /// <summary>
+        /// Only digits allowed in the textbox.
+        /// </summary>
+        private void txtBoxUserSec_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > 0))
+            {
+                e.Handled = true;
+            }
+            enhanchedTextBox1.txtBox.Focus();
         }
     }
 }

@@ -44,9 +44,9 @@
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timestampToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timestampToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTimeStamp = new System.Windows.Forms.Button();
             this.lblCurrent = new System.Windows.Forms.Label();
             this.btnRepeat = new System.Windows.Forms.Button();
@@ -66,6 +66,7 @@
             this.toolTip_btnTimeStamp = new System.Windows.Forms.ToolTip(this.components);
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
+            this.txtBoxUserSec = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
@@ -83,7 +84,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(445, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "File";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -172,9 +172,9 @@
             this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem,
             this.pauseToolStripMenuItem,
+            this.timestampToolStripMenuItem,
             this.repeatToolStripMenuItem,
-            this.stopToolStripMenuItem,
-            this.timestampToolStripMenuItem});
+            this.stopToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
             this.audioToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.audioToolStripMenuItem.Text = "Audio";
@@ -193,6 +193,13 @@
             this.pauseToolStripMenuItem.Text = "Pause             (F2)";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
+            // timestampToolStripMenuItem
+            // 
+            this.timestampToolStripMenuItem.Name = "timestampToolStripMenuItem";
+            this.timestampToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.timestampToolStripMenuItem.Text = "Timestamp   (F3)";
+            this.timestampToolStripMenuItem.Click += new System.EventHandler(this.timestampToolStripMenuItem_Click);
+            // 
             // repeatToolStripMenuItem
             // 
             this.repeatToolStripMenuItem.Name = "repeatToolStripMenuItem";
@@ -207,17 +214,10 @@
             this.stopToolStripMenuItem.Text = "Stop               (F5)";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
-            // timestampToolStripMenuItem
-            // 
-            this.timestampToolStripMenuItem.Name = "timestampToolStripMenuItem";
-            this.timestampToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.timestampToolStripMenuItem.Text = "Timestamp   (F3)";
-            this.timestampToolStripMenuItem.Click += new System.EventHandler(this.timestampToolStripMenuItem_Click);
-            // 
             // btnTimeStamp
             // 
             this.btnTimeStamp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnTimeStamp.Location = new System.Drawing.Point(12, 372);
+            this.btnTimeStamp.Location = new System.Drawing.Point(168, 372);
             this.btnTimeStamp.Name = "btnTimeStamp";
             this.btnTimeStamp.Size = new System.Drawing.Size(68, 23);
             this.btnTimeStamp.TabIndex = 2;
@@ -237,7 +237,7 @@
             // btnRepeat
             // 
             this.btnRepeat.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnRepeat.Location = new System.Drawing.Point(86, 372);
+            this.btnRepeat.Location = new System.Drawing.Point(286, 372);
             this.btnRepeat.Name = "btnRepeat";
             this.btnRepeat.Size = new System.Drawing.Size(68, 23);
             this.btnRepeat.TabIndex = 6;
@@ -249,7 +249,7 @@
             // btnPlayPause
             // 
             this.btnPlayPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnPlayPause.Location = new System.Drawing.Point(160, 372);
+            this.btnPlayPause.Location = new System.Drawing.Point(12, 372);
             this.btnPlayPause.Name = "btnPlayPause";
             this.btnPlayPause.Size = new System.Drawing.Size(72, 23);
             this.btnPlayPause.TabIndex = 8;
@@ -261,7 +261,7 @@
             // btnStop
             // 
             this.btnStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnStop.Location = new System.Drawing.Point(238, 372);
+            this.btnStop.Location = new System.Drawing.Point(90, 372);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(72, 23);
             this.btnStop.TabIndex = 9;
@@ -280,6 +280,7 @@
             this.trackBar_PlayBackRate.Size = new System.Drawing.Size(428, 45);
             this.trackBar_PlayBackRate.TabIndex = 10;
             this.trackBar_PlayBackRate.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar_PlayBackRate.Scroll += new System.EventHandler(this.trackBar_PlayBackRate_Scroll);
             // 
             // trackBar_PlayBackPosition
             // 
@@ -288,6 +289,7 @@
             this.trackBar_PlayBackPosition.Name = "trackBar_PlayBackPosition";
             this.trackBar_PlayBackPosition.Size = new System.Drawing.Size(428, 45);
             this.trackBar_PlayBackPosition.TabIndex = 11;
+            this.trackBar_PlayBackPosition.Scroll += new System.EventHandler(this.trackBar_PlayBackPosition_Scroll);
             // 
             // label_PlayBackRate
             // 
@@ -337,11 +339,20 @@
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
             // 
+            // txtBoxUserSec
+            // 
+            this.txtBoxUserSec.Location = new System.Drawing.Point(243, 374);
+            this.txtBoxUserSec.Name = "txtBoxUserSec";
+            this.txtBoxUserSec.Size = new System.Drawing.Size(37, 20);
+            this.txtBoxUserSec.TabIndex = 17;
+            this.txtBoxUserSec.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxUserSec_KeyPress);
+            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 561);
+            this.ClientSize = new System.Drawing.Size(445, 562);
+            this.Controls.Add(this.txtBoxUserSec);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBox_AutoPlayBackRate);
@@ -409,6 +420,7 @@
         private System.Windows.Forms.ToolTip toolTip_btnStop;
         private System.Windows.Forms.ToolTip toolTip_btnRepeat;
         private System.Windows.Forms.ToolTip toolTip_btnTimeStamp;
+        private System.Windows.Forms.TextBox txtBoxUserSec;
     }
 }
 

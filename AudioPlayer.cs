@@ -10,31 +10,24 @@ namespace TextPoint
 {
     public class AudioPlayer : IDisposable
     {
-        WindowsMediaPlayer Playah = new WindowsMediaPlayer();
-        private System.Windows.Forms.Timer tim = new System.Windows.Forms.Timer();
-
-        /// <summary>
-        /// Properties
-        /// </summary>
+        WindowsMediaPlayer Playah;
+        private System.Windows.Forms.Timer tim;
         public bool SetOutput { get; set; }
-        public bool Repeat { get; set; }
+        private bool Repeat { get; set; }
 
         /// <summary>
         /// Constructor takes filename
         /// </summary>
-        /// <param name="fileName"></param>
         public AudioPlayer(string fileName)
         {
-
-            Playah.settings.autoStart = false; //disable the autostart upon load, gets enabled trough PlayPause() below.
             if (fileName == "")
                 SetOutput = false;
             else
             {
-                Playah.URL = fileName;
-                
-            }
-                
+                Playah = new WindowsMediaPlayer();
+                Playah.settings.autoStart = false; //disable the autostart upon load, gets enabled trough PlayPause() below.
+                Playah.URL = fileName;               
+            }             
         }
 
         /// <summary>
@@ -87,37 +80,38 @@ namespace TextPoint
         }
 
         #region Timer
-        public void EnableOrDisableTimer()
+        /// <summary>
+        /// delay represents user input in seconds. A new timer is created on each enable which is BAD. However, otherwise it bugs out.
+        /// </summary>
+        public void EnableOrDisableTimer(int delay)
         {
             if (!Repeat)
             {
-                Repeat = true;
-                tim.Enabled = true;
-                tim.Interval = 3000;
-                tim.Tick += Tim_Tick;
+                Playah.controls.currentPosition = Playah.controls.currentPosition - delay;
+                tim = new System.Windows.Forms.Timer();
+                tim.Tick += (object sender, EventArgs e) => Tim_Tick(sender, e, delay);
+                tim.Interval = delay * (1000);               
                 tim.Start();
+                Repeat = true;
             }
             else
             {
                 Repeat = false;
-                tim.Enabled = false;
                 tim.Stop();
                 tim.Dispose();
             }
         }
-        
 
-        private void Tim_Tick(object sender, EventArgs e)
+        private void Tim_Tick(object sender, EventArgs e, int delay)
         {
             if (SetOutput)
-                Playah.controls.currentPosition = Playah.controls.currentPosition - 3;
+                Playah.controls.currentPosition = Playah.controls.currentPosition - delay;
         }
         #endregion
 
         /// <summary>
         /// Sets a new playback rate
         /// </summary>
-        /// <param name="value"></param>
         internal void SetRate(double value)
         {
             Playah.settings.rate = value;
@@ -126,7 +120,6 @@ namespace TextPoint
         /// <summary>
         /// Gets current playback speed
         /// </summary>
-        /// <returns></returns>
         internal string GetCurrentRate()
         {
             return Playah.settings.rate.ToString();
@@ -135,7 +128,6 @@ namespace TextPoint
         /// <summary>
         /// Gets the current position/timestamp of the audio
         /// </summary>
-        /// <returns></returns>
         internal double GetCurrentPosition()
         {
             return Playah.controls.currentPosition;
@@ -144,7 +136,6 @@ namespace TextPoint
         /// <summary>
         /// Method used by the trackbar scroll to move position
         /// </summary>
-        /// <param name="value"></param>
         internal void SetCurrentPosition(double value)
         {
             Playah.controls.currentPosition = value;
@@ -153,7 +144,6 @@ namespace TextPoint
         /// <summary>
         /// Gets the duration of the audio file, used to by the trackbar to resize.
         /// </summary>
-        /// <returns></returns>
         internal double GetDurationDouble()
         {
             return Playah.currentMedia.duration;
