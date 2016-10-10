@@ -11,76 +11,171 @@ namespace TextPoint
 {
     public class AudioPlayer : IDisposable
     {
+        #region Reference variables
         WindowsMediaPlayer Playah;
         private System.Windows.Forms.Timer tim;
-        public bool SetOutput { get; set; }
-        private bool Repeat { get; set; }
+        #endregion
 
-        //constructor used on form closing and disposing 
+        #region Properties
+        public bool SetOutput { get; private set; }
+        private bool Repeat { get; set; }
+        public bool AutoPlayNext { get; set; }
+        public double Rate
+        {
+            get
+            {
+                return Playah.settings.rate;
+            }
+            set
+            {
+                if (value <= 2.00 && value > 0.25)
+                {
+                    Playah.settings.rate = value;
+                }
+                else
+                    throw new ArgumentOutOfRangeException("Only values between 0.25 and 2.00 are allowed");
+            }
+        }
+        public double CurrentPosition
+        {
+            get
+            {
+                return Playah.controls.currentPosition;
+            }
+            set
+            {
+                if (value <= Playah.currentMedia.duration)
+                {
+                    Playah.controls.currentPosition = value;
+                }
+                else
+                    throw new ArgumentOutOfRangeException("The value of the position cannot be greater than the duration");
+            }
+        }
+        private double Duration
+        {
+            get
+            {
+                return Playah.currentMedia.duration;
+            }
+        }
+        private string CurrentPositionToString
+        {
+            get
+            {
+                return Playah.controls.currentPositionString;
+            }
+        }
+        private string DurationToString
+        {
+            get
+            { return Playah.currentMedia.durationString;
+            }
+        }
+        private IWMPPlaylist CurrentPlayList
+        {
+            get { return Playah.currentPlaylist; }
+            set { Playah.currentPlaylist = value; }
+        }
+        private WMPPlayState PlayState
+        {
+            get
+            {
+                return Playah.playState;
+            }
+        }
+
+        #endregion
+
+        #region Constructors
+        //Default consructor
         public AudioPlayer()
         {
-            SetOutput = false;
         }
         /// <summary>
         /// Constructor takes filename
         /// </summary>
         public AudioPlayer(List<string> fileName)
         {
-            if (fileName.Count == 0)
-                SetOutput = false;
-            else if (fileName.Count == 1)
+            SetAudioSettings();
+            ConnectPlayList(GeneratePlayList(fileName));
+        }
+        #endregion
+
+        #region Initialize Audio Player
+        /// <summary>
+        /// Sets the generated playlist to be the current playlist of the WMP.
+        /// </summary>
+        /// <param name="playlist"></param>
+        private void ConnectPlayList(IWMPPlaylist playlist)
+        {
+            CurrentPlayList = playlist;
+        }
+
+        /// <summary>
+        /// Sets default audio player settings.
+        /// </summary>
+        private void SetAudioSettings()
+        {
+            Playah = new WindowsMediaPlayer();
+            Playah.PlayStateChange += Playah_PlayStateChange;
+            Playah.settings.autoStart = false;
+            SetOutput = true;
+        }
+
+        /// <summary>
+        /// Generates a playlist.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private IWMPPlaylist GeneratePlayList(List<string> fileName)
+        {
+            var playlist = Playah.playlistCollection.newPlaylist("Playlist");
+            foreach (string str in fileName)
             {
-                Playah = new WindowsMediaPlayer();
-                Playah.settings.autoStart = false; //disable the autostart upon load, gets enabled trough PlayPause() below.
-                Playah.URL = fileName.First();
-                SetOutput = true;               
+                var audio = Playah.newMedia(str);
+                playlist.appendItem(audio);
             }
-            else
+            return playlist;
+        }
+        #endregion
+
+        #region Playstate
+        /// <summary>
+        /// Checks if user has set auto play next checkbox
+        /// </summary>
+        /// <param name="NewState"></param>
+        private void Playah_PlayStateChange(int NewState)
+        {
+            if (!AutoPlayNext && NewState == (int)WMPPlayState.wmppsMediaEnded)
             {
-                Playah = new WindowsMediaPlayer();
-                Playah.settings.autoStart = false;
-                var playlist = Playah.playlistCollection.newPlaylist("Playlist");
-                foreach(string str in fileName)
-                {
-                    var audio = Playah.newMedia(str);
-                    playlist.appendItem(audio);
-                }
-                Playah.currentPlaylist = playlist;
-                SetOutput = true;
-            }             
+                Playah.close();
+            }
         }
 
-        /// <summary>
-        /// Returns the currentposition of the audiofile.
-        /// </summary>
-        public string CurrentTime()
-        {
-            return Playah.controls.currentPositionString;
-        }
+        #endregion
 
+        #region Play/Pause/Stop
         /// <summary>
-        /// Returns the duration of the audiofile as string.
+        /// Play
         /// </summary>
-        public string GetDuration()
+        public void Play()
         {
-            return Playah.currentMedia.durationString;
-        }
-
-        /// <summary>
-        /// Checks playstate to see whether the file is already playing or not.
-        /// </summary>
-        public void PlayPause()
-        {
-            if (Playah.playState == WMPPlayState.wmppsPaused)
+            if (PlayState == WMPPlayState.wmppsReady || PlayState == WMPPlayState.wmppsStopped || PlayState == WMPPlayState.wmppsPaused)
             {
                 Playah.controls.play();
             }
-            else if (Playah.playState == WMPPlayState.wmppsPlaying)
+        }
+
+        /// <summary>
+        /// Pause
+        /// </summary>
+        public void Pause()
+        {
+            if(PlayState == WMPPlayState.wmppsPlaying)
             {
                 Playah.controls.pause();
             }
-            else if (!string.IsNullOrEmpty(Playah.URL) || Playah.currentPlaylist.count > 0)
-                Playah.controls.play();
         }
 
         /// <summary>
@@ -90,14 +185,7 @@ namespace TextPoint
         {
             Playah.controls.stop();
         }
-
-        /// <summary>
-        /// Hopefully disposes of the player when called upon.
-        /// </summary>
-        public void Dispose()
-        {
-            Playah.close();
-        }
+        #endregion
 
         #region Timer
         /// <summary>
@@ -107,10 +195,10 @@ namespace TextPoint
         {
             if (!Repeat)
             {
-                Playah.controls.currentPosition = Playah.controls.currentPosition - delay;
+                CurrentPosition = CurrentPosition - delay;
                 tim = new System.Windows.Forms.Timer();
                 tim.Tick += (object sender, EventArgs e) => Tim_Tick(sender, e, delay);
-                tim.Interval = delay * (1000);               
+                tim.Interval = delay * (1000);
                 tim.Start();
                 Repeat = true;
             }
@@ -125,16 +213,17 @@ namespace TextPoint
         private void Tim_Tick(object sender, EventArgs e, int delay)
         {
             if (SetOutput)
-                Playah.controls.currentPosition = Playah.controls.currentPosition - delay;
+                CurrentPosition = CurrentPosition - delay;
         }
         #endregion
 
+        #region Time/Duration/Position/Rate
         /// <summary>
         /// Sets a new playback rate
         /// </summary>
         internal void SetRate(double value)
         {
-            Playah.settings.rate = value;
+            Rate = value;
         }
 
         /// <summary>
@@ -142,7 +231,7 @@ namespace TextPoint
         /// </summary>
         internal string GetCurrentRate()
         {
-            return Playah.settings.rate.ToString();
+            return Rate.ToString();
         }
 
         /// <summary>
@@ -150,7 +239,7 @@ namespace TextPoint
         /// </summary>
         internal double GetCurrentPosition()
         {
-            return Playah.controls.currentPosition;
+            return CurrentPosition;
         }
 
         /// <summary>
@@ -158,7 +247,7 @@ namespace TextPoint
         /// </summary>
         internal void SetCurrentPosition(double value)
         {
-            Playah.controls.currentPosition = value;
+            CurrentPosition = value;
         }
 
         /// <summary>
@@ -166,7 +255,34 @@ namespace TextPoint
         /// </summary>
         internal double GetDurationDouble()
         {
-            return Playah.currentMedia.duration;
+            return Duration;
         }
+
+        /// <summary>
+        /// Returns the currentposition of the audiofile.
+        /// </summary>
+        public string CurrentTime()
+        {
+            return CurrentPositionToString;
+        }
+
+        /// <summary>
+        /// Returns the duration of the audiofile as string.
+        /// </summary>
+        public string GetDuration()
+        {
+            return DurationToString;
+        }
+        #endregion
+
+        #region Disposing
+        /// <summary>
+        /// Hopefully disposes of the player when called upon.
+        /// </summary>
+        public void Dispose()
+        {
+            Playah.close();
+        }
+        #endregion
     }
 }

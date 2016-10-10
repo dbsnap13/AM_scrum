@@ -50,7 +50,7 @@
             this.btnTimeStamp = new System.Windows.Forms.Button();
             this.lblCurrent = new System.Windows.Forms.Label();
             this.btnRepeat = new System.Windows.Forms.Button();
-            this.btnPlayPause = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.trackBar_PlayBackRate = new System.Windows.Forms.TrackBar();
             this.trackBar_PlayBackPosition = new System.Windows.Forms.TrackBar();
@@ -61,12 +61,14 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip_btnPlayPause = new System.Windows.Forms.ToolTip(this.components);
+            this.btnPause = new System.Windows.Forms.Button();
             this.toolTip_btnStop = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip_btnRepeat = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip_btnTimeStamp = new System.Windows.Forms.ToolTip(this.components);
             this.txtBoxUserSec = new System.Windows.Forms.TextBox();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
+            this.checkBox_AutoPlayNext = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
@@ -217,7 +219,7 @@
             // btnTimeStamp
             // 
             this.btnTimeStamp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnTimeStamp.Location = new System.Drawing.Point(168, 372);
+            this.btnTimeStamp.Location = new System.Drawing.Point(246, 372);
             this.btnTimeStamp.Name = "btnTimeStamp";
             this.btnTimeStamp.Size = new System.Drawing.Size(68, 23);
             this.btnTimeStamp.TabIndex = 2;
@@ -237,7 +239,7 @@
             // btnRepeat
             // 
             this.btnRepeat.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnRepeat.Location = new System.Drawing.Point(286, 372);
+            this.btnRepeat.Location = new System.Drawing.Point(363, 373);
             this.btnRepeat.Name = "btnRepeat";
             this.btnRepeat.Size = new System.Drawing.Size(68, 23);
             this.btnRepeat.TabIndex = 6;
@@ -246,22 +248,22 @@
             this.btnRepeat.UseVisualStyleBackColor = true;
             this.btnRepeat.Click += new System.EventHandler(this.btnRepeat_Click);
             // 
-            // btnPlayPause
+            // btnPlay
             // 
-            this.btnPlayPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnPlayPause.Location = new System.Drawing.Point(12, 372);
-            this.btnPlayPause.Name = "btnPlayPause";
-            this.btnPlayPause.Size = new System.Drawing.Size(72, 23);
-            this.btnPlayPause.TabIndex = 8;
-            this.btnPlayPause.Text = "Play/Pause";
-            this.toolTip_btnPlayPause.SetToolTip(this.btnPlayPause, "Play (F2)");
-            this.btnPlayPause.UseVisualStyleBackColor = true;
-            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+            this.btnPlay.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnPlay.Location = new System.Drawing.Point(12, 372);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(72, 23);
+            this.btnPlay.TabIndex = 8;
+            this.btnPlay.Text = "Play";
+            this.toolTip_btnPlayPause.SetToolTip(this.btnPlay, "Play (F2)");
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlayPause_Click);
             // 
             // btnStop
             // 
             this.btnStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnStop.Location = new System.Drawing.Point(90, 372);
+            this.btnStop.Location = new System.Drawing.Point(168, 372);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(72, 23);
             this.btnStop.TabIndex = 9;
@@ -322,15 +324,27 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(365, 382);
+            this.label1.Location = new System.Drawing.Point(444, 383);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "label1";
             // 
+            // btnPause
+            // 
+            this.btnPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnPause.Location = new System.Drawing.Point(90, 372);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(72, 23);
+            this.btnPause.TabIndex = 18;
+            this.btnPause.Text = "Pause";
+            this.toolTip_btnPlayPause.SetToolTip(this.btnPause, "Play (F2)");
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btn_Pause_Click);
+            // 
             // txtBoxUserSec
             // 
-            this.txtBoxUserSec.Location = new System.Drawing.Point(243, 374);
+            this.txtBoxUserSec.Location = new System.Drawing.Point(320, 375);
             this.txtBoxUserSec.Name = "txtBoxUserSec";
             this.txtBoxUserSec.Size = new System.Drawing.Size(37, 20);
             this.txtBoxUserSec.TabIndex = 17;
@@ -347,11 +361,23 @@
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
             // 
+            // checkBox_AutoPlayNext
+            // 
+            this.checkBox_AutoPlayNext.AutoSize = true;
+            this.checkBox_AutoPlayNext.Location = new System.Drawing.Point(556, 375);
+            this.checkBox_AutoPlayNext.Name = "checkBox_AutoPlayNext";
+            this.checkBox_AutoPlayNext.Size = new System.Drawing.Size(93, 17);
+            this.checkBox_AutoPlayNext.TabIndex = 19;
+            this.checkBox_AutoPlayNext.Text = "Auto play next";
+            this.checkBox_AutoPlayNext.UseVisualStyleBackColor = true;
+            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.checkBox_AutoPlayNext);
+            this.Controls.Add(this.btnPause);
             this.Controls.Add(this.txtBoxUserSec);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.label1);
@@ -361,7 +387,7 @@
             this.Controls.Add(this.trackBar_PlayBackPosition);
             this.Controls.Add(this.trackBar_PlayBackRate);
             this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.btnPlayPause);
+            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnRepeat);
             this.Controls.Add(this.lblCurrent);
             this.Controls.Add(this.btnTimeStamp);
@@ -397,7 +423,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-        private System.Windows.Forms.Button btnPlayPause;
+        private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.TrackBar trackBar_PlayBackRate;
         private System.Windows.Forms.TrackBar trackBar_PlayBackPosition;
@@ -421,6 +447,8 @@
         private System.Windows.Forms.ToolTip toolTip_btnRepeat;
         private System.Windows.Forms.ToolTip toolTip_btnTimeStamp;
         private System.Windows.Forms.TextBox txtBoxUserSec;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.CheckBox checkBox_AutoPlayNext;
     }
 }
 

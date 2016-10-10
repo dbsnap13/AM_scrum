@@ -32,6 +32,19 @@ namespace TextPoint
         public FRMMain()
         {
             InitializeComponent();
+            checkBox_AutoPlayNext.CheckedChanged += CheckBox_AutoPlayNext_CheckedChanged;
+        }
+
+        private void CheckBox_AutoPlayNext_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_AutoPlayNext.Checked)
+            {
+                _player.AutoPlayNext = true;
+            }
+            else if (!checkBox_AutoPlayNext.Checked)
+            {
+                _player.AutoPlayNext = false;
+            }
         }
 
         private void FRMMain_Load(object sender, EventArgs e)
@@ -71,12 +84,12 @@ namespace TextPoint
         #region ToolStripMenu
         private void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            btnPlayPause.PerformClick();
+            btnPlay.PerformClick();
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            btnPlayPause.PerformClick();
+            btnPlay.PerformClick();
         }
 
         private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
@@ -238,9 +251,18 @@ namespace TextPoint
 
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
-            _player.PlayPause();
+            _player.Play();
             timer1.Interval = 500;
             timer1.Tick += Timer1_Tick;       
+            timer1.Start();
+            enhanchedTextBox1.txtBox.Focus();
+        }
+
+        private void btn_Pause_Click(object sender, EventArgs e)
+        {
+            _player.Pause();
+            timer1.Interval = 500;
+            timer1.Tick += Timer1_Tick;
             timer1.Start();
             enhanchedTextBox1.txtBox.Focus();
         }
@@ -283,7 +305,7 @@ namespace TextPoint
                 switch (keyChar)
                 {
                     case Keys.F2:
-                        btnPlayPause.PerformClick();
+                        btnPlay.PerformClick();
                         //_player.PlayPause();
                         //lblCurrent.Text = _player.GetDuration();
                         break;
@@ -353,7 +375,7 @@ namespace TextPoint
                 switch (e.KeyCode)
                 {
                     case Keys.F2:
-                        btnPlayPause.PerformClick();
+                        btnPlay.PerformClick();
                         //_player.PlayPause();
                         //lblCurrent.Text = _player.GetDuration();
                         break;
@@ -461,6 +483,7 @@ namespace TextPoint
             }
             enhanchedTextBox1.txtBox.Focus();
         }
+
     }
 }
 
