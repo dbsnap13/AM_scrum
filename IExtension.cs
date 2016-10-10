@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TextPoint
 {
-
+    /// <summary>
+    /// DO WE NEED THIS?
+    /// </summary>
     public interface IExtension
     {
         void Initialize(ITextPoint hostApplication);
