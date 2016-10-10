@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
+using WMPLib;
 
 namespace TextPoint
 {
@@ -24,7 +25,7 @@ namespace TextPoint
         int wordcount = 0;
         string lastword = string.Empty;
 
-        AudioPlayer _player = new AudioPlayer("");
+        AudioPlayer _player = new AudioPlayer();
 
 
         #region Initialize
@@ -129,6 +130,7 @@ namespace TextPoint
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "All files (*.*)|*.*";
             ofd.CheckFileExists = true;
+            ofd.Multiselect = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 //string format = Path.GetExtension(ofd.FileName);
@@ -143,8 +145,7 @@ namespace TextPoint
                 }
                 else if (ofd.FileName.Contains("wav") || ofd.FileName.Contains("mp3"))
                 {
-                    _player = new AudioPlayer(ofd.FileName);
-                    _player.SetOutput = true;
+                    _player = new AudioPlayer(ofd.FileNames.ToList());
                 }
 
                 enhanchedTextBox1.txtBox.Focus();
@@ -267,7 +268,10 @@ namespace TextPoint
         /// </summary>
         private void FRMMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _player.Dispose();
+            if(_player.SetOutput)
+            {
+                _player.Dispose();
+            }          
         }
 
 

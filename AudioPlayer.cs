@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,18 +16,37 @@ namespace TextPoint
         public bool SetOutput { get; set; }
         private bool Repeat { get; set; }
 
+        //constructor used on form closing and disposing 
+        public AudioPlayer()
+        {
+            SetOutput = false;
+        }
         /// <summary>
         /// Constructor takes filename
         /// </summary>
-        public AudioPlayer(string fileName)
+        public AudioPlayer(List<string> fileName)
         {
-            if (fileName == "")
+            if (fileName.Count == 0)
                 SetOutput = false;
-            else
+            else if (fileName.Count == 1)
             {
                 Playah = new WindowsMediaPlayer();
                 Playah.settings.autoStart = false; //disable the autostart upon load, gets enabled trough PlayPause() below.
-                Playah.URL = fileName;               
+                Playah.URL = fileName.First();
+                SetOutput = true;               
+            }
+            else
+            {
+                Playah = new WindowsMediaPlayer();
+                Playah.settings.autoStart = false;
+                var playlist = Playah.playlistCollection.newPlaylist("Playlist");
+                foreach(string str in fileName)
+                {
+                    var audio = Playah.newMedia(str);
+                    playlist.appendItem(audio);
+                }
+                Playah.currentPlaylist = playlist;
+                SetOutput = true;
             }             
         }
 
@@ -59,7 +79,7 @@ namespace TextPoint
             {
                 Playah.controls.pause();
             }
-            else if (!string.IsNullOrEmpty(Playah.URL) && Playah.settings.autoStart == false)
+            else if (!string.IsNullOrEmpty(Playah.URL) || Playah.currentPlaylist.count > 0)
                 Playah.controls.play();
         }
 
