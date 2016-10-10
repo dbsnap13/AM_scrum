@@ -250,7 +250,7 @@ namespace TextPoint
             trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
             DisplayPosition();
             trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
-            enhanchedTextBox1.txtBox.Focus();
+            //enhanchedTextBox1.txtBox.Focus();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
