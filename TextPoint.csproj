@@ -73,6 +73,7 @@
     <Compile Include="ITextPoint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeedRate.cs" />
     <EmbeddedResource Include="FRMMain.resx">
       <DependentUpon>FRMMain.cs</DependentUpon>
     </EmbeddedResource>

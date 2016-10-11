@@ -37,14 +37,7 @@ namespace TextPoint
 
         private void CheckBox_AutoPlayNext_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox_AutoPlayNext.Checked)
-            {
-                _player.AutoPlayNext = true;
-            }
-            else if (!checkBox_AutoPlayNext.Checked)
-            {
-                _player.AutoPlayNext = false;
-            }
+            _player.AutoPlayNext = checkBox_AutoPlayNext.Checked;
         }
 
         private void FRMMain_Load(object sender, EventArgs e)
@@ -165,11 +158,6 @@ namespace TextPoint
             }
         }
 
-        private void UpdateTrackBarLength(int length)
-        {
-            trackBar_PlayBackPosition.Maximum = length;
-        }
-
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -272,7 +260,6 @@ namespace TextPoint
             trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
             DisplayPosition();
             trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
-            //enhanchedTextBox1.txtBox.Focus();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -306,16 +293,12 @@ namespace TextPoint
                 {
                     case Keys.F2:
                         btnPlay.PerformClick();
-                        //_player.PlayPause();
-                        //lblCurrent.Text = _player.GetDuration();
                         break;
                     case Keys.F3:
                         btnTimeStamp.PerformClick();
-                        //btnTimeStamp_Click(sender, e);
                         break;
                     case Keys.F4:
                         btnStop.PerformClick();
-                        //btnRepeat_Click(sender, e);
                         break;
 
                     case Keys.F5:
@@ -351,16 +334,16 @@ namespace TextPoint
         {
             if (wordcount >= 10)
             {
-                _player.SetRate(1.25);
+                _player.SetRate(SpeedRate.ConvertRate(1));
                 Thread.Sleep(100);
-                label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
+                label_PlayBackRate.Text = SpeedRate.DisplayRate(_player.Rate.ToString());
                 trackBar_PlayBackRate.Value = 1;
             }
             else if (wordcount <= 5)
             {
-                _player.SetRate(0.75);
+                _player.SetRate(SpeedRate.ConvertRate(-1));
                 Thread.Sleep(100);
-                label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
+                label_PlayBackRate.Text = SpeedRate.DisplayRate(_player.Rate.ToString());
                 trackBar_PlayBackRate.Value = -1;
             }
         }
@@ -376,15 +359,11 @@ namespace TextPoint
                 {
                     case Keys.F2:
                         btnPlay.PerformClick();
-                        //_player.PlayPause();
-                        //lblCurrent.Text = _player.GetDuration();
                         break;
                     case Keys.F3:
-                        //btnTimeStamp_Click(sender, e);
                         btnTimeStamp.PerformClick();
                         break;
                     case Keys.F4:
-                        //btnRepeat_Click(sender, e);
                         btnRepeat.PerformClick();
                         break;
                     case Keys.F5:
@@ -398,35 +377,18 @@ namespace TextPoint
 
         private void trackBar_PlayBackRate_Scroll(object sender, EventArgs e)
         {
-            _player.SetRate(ConvertRate(trackBar_PlayBackRate.Value));
-            Thread.Sleep(100); //update label properly
-            label_PlayBackRate.Text = "Playback rate: " + _player.GetCurrentRate() + "x speed";
-            enhanchedTextBox1.txtBox.Focus();
-        }
-
-        private double ConvertRate(int value)
-        {
-            switch(value)
+            if (_player.SetOutput)
             {
-                case -3:
-                    return 0.25;
-                case -2:
-                    return 0.50;
-                case -1:
-                    return 0.75;
-                case 0:
-                    return 1;
-                case 1:
-                    return 1.25;
-                case 2:
-                    return 1.50;
-                case 3:
-                    return 1.75;
-                case 4:
-                    return 2;
-                default:
-                    return 1;
+                _player.SetRate(SpeedRate.ConvertRate(trackBar_PlayBackRate.Value));
+                Thread.Sleep(100);
+                label_PlayBackRate.Text = SpeedRate.DisplayRate(_player.Rate.ToString());
             }
+            else
+            {
+                label_PlayBackRate.Text = SpeedRate.DisplayRate(SpeedRate.ConvertRate(trackBar_PlayBackRate.Value).ToString());
+            }
+                
+            enhanchedTextBox1.txtBox.Focus();
         }
 
         /// <summary>
@@ -434,7 +396,7 @@ namespace TextPoint
         /// </summary>
         private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
         {
-            _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);
+            _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);            
         }
 
         /// <summary>

@@ -26,9 +26,9 @@ namespace TextPoint
             {
                 return Playah.settings.rate;
             }
-            set
+            private set
             {
-                if (value <= 2.00 && value > 0.25)
+                if (value <= 2.00 && value >= 0.25)
                 {
                     Playah.settings.rate = value;
                 }
@@ -72,12 +72,12 @@ namespace TextPoint
             { return Playah.currentMedia.durationString;
             }
         }
-        private IWMPPlaylist CurrentPlayList
+        public IWMPPlaylist CurrentPlayList
         {
             get { return Playah.currentPlaylist; }
-            set { Playah.currentPlaylist = value; }
+            private set { Playah.currentPlaylist = value; }
         }
-        private WMPPlayState PlayState
+        public WMPPlayState PlayState
         {
             get
             {
@@ -91,6 +91,7 @@ namespace TextPoint
         //Default consructor
         public AudioPlayer()
         {
+            SetOutput = false;
         }
         /// <summary>
         /// Constructor takes filename
