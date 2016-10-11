@@ -66,9 +66,10 @@
             this.toolTip_btnRepeat = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip_btnTimeStamp = new System.Windows.Forms.ToolTip(this.components);
             this.txtBoxUserSec = new System.Windows.Forms.TextBox();
+            this.checkBox_AutoPlayNext = new System.Windows.Forms.CheckBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
-            this.checkBox_AutoPlayNext = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
@@ -350,6 +351,25 @@
             this.txtBoxUserSec.TabIndex = 17;
             this.txtBoxUserSec.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxUserSec_KeyPress);
             // 
+            // checkBox_AutoPlayNext
+            // 
+            this.checkBox_AutoPlayNext.AutoSize = true;
+            this.checkBox_AutoPlayNext.Location = new System.Drawing.Point(556, 375);
+            this.checkBox_AutoPlayNext.Name = "checkBox_AutoPlayNext";
+            this.checkBox_AutoPlayNext.Size = new System.Drawing.Size(93, 17);
+            this.checkBox_AutoPlayNext.TabIndex = 19;
+            this.checkBox_AutoPlayNext.Text = "Auto play next";
+            this.checkBox_AutoPlayNext.UseVisualStyleBackColor = true;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(492, 415);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(280, 134);
+            this.listBox1.TabIndex = 20;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
             // elementHost1
             // 
             this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -361,21 +381,12 @@
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
             // 
-            // checkBox_AutoPlayNext
-            // 
-            this.checkBox_AutoPlayNext.AutoSize = true;
-            this.checkBox_AutoPlayNext.Location = new System.Drawing.Point(556, 375);
-            this.checkBox_AutoPlayNext.Name = "checkBox_AutoPlayNext";
-            this.checkBox_AutoPlayNext.Size = new System.Drawing.Size(93, 17);
-            this.checkBox_AutoPlayNext.TabIndex = 19;
-            this.checkBox_AutoPlayNext.Text = "Auto play next";
-            this.checkBox_AutoPlayNext.UseVisualStyleBackColor = true;
-            // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.checkBox_AutoPlayNext);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.txtBoxUserSec);
@@ -449,6 +460,7 @@
         private System.Windows.Forms.TextBox txtBoxUserSec;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.CheckBox checkBox_AutoPlayNext;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

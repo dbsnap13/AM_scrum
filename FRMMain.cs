@@ -154,6 +154,12 @@ namespace TextPoint
                     _player = new AudioPlayer(ofd.FileNames.ToList());
                 }
 
+                for(int i = 0; i < _player.CurrentPlayList.count; i++)
+                {
+                    listBox1.Items.Add(_player.CurrentPlayList.Item[i].name.ToString());
+                }
+                listBox1.SelectedIndex = 0;
+
                 enhanchedTextBox1.txtBox.Focus();
             }
         }
@@ -446,6 +452,11 @@ namespace TextPoint
             enhanchedTextBox1.txtBox.Focus();
         }
 
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _player.PlaySelected(listBox1.SelectedItem.ToString());
+            btnPlay.PerformClick();
+        }
     }
 }
 

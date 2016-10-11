@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WMPLib;
 
 namespace TextPoint
@@ -28,12 +29,20 @@ namespace TextPoint
             }
             private set
             {
-                if (value <= 2.00 && value >= 0.25)
+                try
                 {
-                    Playah.settings.rate = value;
+                    if (value <= 2.00 && value >= 0.25)
+                    {
+                        Playah.settings.rate = value;
+                    }
+                    else
+                        throw new ArgumentOutOfRangeException("Only values between 0.25 and 2.00 are allowed");
                 }
-                else
-                    throw new ArgumentOutOfRangeException("Only values between 0.25 and 2.00 are allowed");
+                catch(ArgumentOutOfRangeException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+
             }
         }
         public double CurrentPosition
@@ -44,12 +53,20 @@ namespace TextPoint
             }
             set
             {
-                if (value <= Playah.currentMedia.duration)
+                try
                 {
-                    Playah.controls.currentPosition = value;
+                    if (value <= Playah.currentMedia.duration)
+                    {
+                        Playah.controls.currentPosition = value;
+                    }
+                    else
+                        throw new ArgumentOutOfRangeException("The value of the position cannot be greater than the duration");
                 }
-                else
-                    throw new ArgumentOutOfRangeException("The value of the position cannot be greater than the duration");
+                catch(ArgumentOutOfRangeException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+
             }
         }
         private double Duration
@@ -285,5 +302,18 @@ namespace TextPoint
             Playah.close();
         }
         #endregion
+
+
+        public void PlaySelected(string name)
+        {
+            for(int i = 0; i<CurrentPlayList.count; i++)
+            {
+                if(CurrentPlayList.Item[i].name == name)
+                {
+                    var audiofile = CurrentPlayList.Item[i];
+                    Playah.controls.playItem(audiofile);
+                }
+            }
+        }
     }
 }
