@@ -32,7 +32,16 @@ namespace TextPoint
         public FRMMain()
         {
             InitializeComponent();
+            label_PlayBackPosition.Text = string.Empty;
             checkBox_AutoPlayNext.CheckedChanged += CheckBox_AutoPlayNext_CheckedChanged;
+            listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
+        }
+
+        private void ListBox1_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            _player.PlaySelected(listBox1.SelectedItem.ToString());
+            DisplayPosition();
+            btnPlay.PerformClick();
         }
 
         private void CheckBox_AutoPlayNext_CheckedChanged(object sender, EventArgs e)
@@ -82,7 +91,7 @@ namespace TextPoint
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            btnPlay.PerformClick();
+            btnPause.PerformClick();
         }
 
         private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
@@ -154,13 +163,19 @@ namespace TextPoint
                     _player = new AudioPlayer(ofd.FileNames.ToList());
                 }
 
-                for(int i = 0; i < _player.CurrentPlayList.count; i++)
-                {
-                    listBox1.Items.Add(_player.CurrentPlayList.Item[i].name.ToString());
-                }
-                listBox1.SelectedIndex = 0;
+                AddToListBox();
 
+                listBox1.SelectedIndex = 0;
+                DisplayPosition();
                 enhanchedTextBox1.txtBox.Focus();
+            }
+        }
+
+        public void AddToListBox()
+        {
+            for (int i = 0; i < _player.CurrentPlayList.count; i++)
+            {
+                listBox1.Items.Add(_player.CurrentPlayList.Item[i].name.ToString());
             }
         }
 
@@ -217,10 +232,19 @@ namespace TextPoint
         {
             if (_player.SetOutput)
             {
-                TimeSpan time = TimeSpan.FromSeconds(_player.GetCurrentPosition());
-                lblCurrent.Text = time.ToString(@"hh\:mm\:ss");
-                string formattedTimeStamp = " (Timestamp: " + time.ToString(@"hh\:mm\:ss") + ") ";
-
+                TimeSpan time = TimeSpan.FromSeconds(_player.CurrentPosition);
+                string formattedTimeStamp = string.Empty;
+                if (_player.Duration/ 60 >= 60)
+                {
+                    lblCurrent.Text = time.ToString(@"hh\:mm\:ss");
+                    formattedTimeStamp = "(" + time.ToString(@"hh\:mm\:ss") + ") ";
+                }
+                else
+                {
+                    lblCurrent.Text = time.ToString(@"mm\:ss");
+                    formattedTimeStamp = "(" + time.ToString(@"mm\:ss") + ") ";
+                }
+                            
                 enhanchedTextBox1.txtBox.CaretPosition.InsertTextInRun(formattedTimeStamp);
                 enhanchedTextBox1.txtBox.CaretPosition = enhanchedTextBox1.txtBox.Selection.End;
                 enhanchedTextBox1.txtBox.Focus();
@@ -263,17 +287,17 @@ namespace TextPoint
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            trackBar_PlayBackPosition.Value = (int)_player.GetCurrentPosition();
+            trackBar_PlayBackPosition.Value = (int)_player.CurrentPosition;
             DisplayPosition();
-            trackBar_PlayBackPosition.Maximum = (int)_player.GetDurationDouble(); //not efficient, but for now it works..
+            trackBar_PlayBackPosition.Maximum = (int)_player.Duration; //not efficient, but for now it works..
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             _player.Stop();
             timer1.Stop();
-            label_PlayBackPosition.Text = "Playback position: 00:00";
             trackBar_PlayBackPosition.Value = 0;
+            DisplayPosition();
             enhanchedTextBox1.txtBox.Focus();
         }
         #endregion
@@ -418,7 +442,24 @@ namespace TextPoint
         /// </summary>
         private void DisplayPosition()
         {
-            label_PlayBackPosition.Text = "Playback position: " + _player.CurrentTime();
+            label_PlayBackPosition.Text = "Playback position: " + _player.CurrentPositionToString + "\nFile: " + _player.CurrentAudioFile + "\nLenght: " + GetLength();
+            toolTip_PositionTrackBar.SetToolTip(trackBar_PlayBackPosition, _player.CurrentPositionToString);
+        }
+
+        private string GetLength()
+        {
+            TimeSpan t = TimeSpan.FromSeconds(_player.CurrentAudioFileLenght);
+            string formattedTime = string.Empty;
+            if (_player.CurrentAudioFileLenght / 60 >= 60)
+            {
+                formattedTime = "(" + t.ToString(@"hh\:mm\:ss") + ") ";
+                return formattedTime;
+            }
+            else
+            {
+                formattedTime = "(" + t.ToString(@"mm\:ss") + ") ";
+                return formattedTime;
+            }
         }
 
         /// <summary>
@@ -454,9 +495,11 @@ namespace TextPoint
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnStop.PerformClick();
             _player.PlaySelected(listBox1.SelectedItem.ToString());
-            btnPlay.PerformClick();
+            DisplayPosition();
         }
+
     }
 }
 

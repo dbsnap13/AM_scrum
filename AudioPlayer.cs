@@ -69,14 +69,14 @@ namespace TextPoint
 
             }
         }
-        private double Duration
+        public double Duration
         {
             get
             {
                 return Playah.currentMedia.duration;
             }
         }
-        private string CurrentPositionToString
+        public string CurrentPositionToString
         {
             get
             {
@@ -99,6 +99,20 @@ namespace TextPoint
             get
             {
                 return Playah.playState;
+            }
+        }
+        public string CurrentAudioFile
+        {
+            get
+            {
+                return Playah.controls.currentItem.name.ToString();
+            }
+        }
+        public double CurrentAudioFileLenght
+        {
+            get
+            {
+                return Playah.currentMedia.duration;
             }
         }
 
@@ -253,14 +267,6 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// Gets the current position/timestamp of the audio
-        /// </summary>
-        internal double GetCurrentPosition()
-        {
-            return CurrentPosition;
-        }
-
-        /// <summary>
         /// Method used by the trackbar scroll to move position
         /// </summary>
         internal void SetCurrentPosition(double value)
@@ -268,29 +274,19 @@ namespace TextPoint
             CurrentPosition = value;
         }
 
-        /// <summary>
-        /// Gets the duration of the audio file, used to by the trackbar to resize.
-        /// </summary>
-        internal double GetDurationDouble()
+        public void PlaySelected(string name)
         {
-            return Duration;
+            for (int i = 0; i < CurrentPlayList.count; i++)
+            {
+                if (CurrentPlayList.Item[i].name == name)
+                {
+                    var audiofile = CurrentPlayList.Item[i];
+                    Playah.controls.currentItem = audiofile;
+                    break;
+                }
+            }
         }
 
-        /// <summary>
-        /// Returns the currentposition of the audiofile.
-        /// </summary>
-        public string CurrentTime()
-        {
-            return CurrentPositionToString;
-        }
-
-        /// <summary>
-        /// Returns the duration of the audiofile as string.
-        /// </summary>
-        public string GetDuration()
-        {
-            return DurationToString;
-        }
         #endregion
 
         #region Disposing
@@ -304,16 +300,6 @@ namespace TextPoint
         #endregion
 
 
-        public void PlaySelected(string name)
-        {
-            for(int i = 0; i<CurrentPlayList.count; i++)
-            {
-                if(CurrentPlayList.Item[i].name == name)
-                {
-                    var audiofile = CurrentPlayList.Item[i];
-                    Playah.controls.playItem(audiofile);
-                }
-            }
-        }
+
     }
 }

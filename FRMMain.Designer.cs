@@ -68,6 +68,8 @@
             this.txtBoxUserSec = new System.Windows.Forms.TextBox();
             this.checkBox_AutoPlayNext = new System.Windows.Forms.CheckBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.toolTip_PositionTrackBar = new System.Windows.Forms.ToolTip(this.components);
+            this.label2 = new System.Windows.Forms.Label();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
             this.menuStrip1.SuspendLayout();
@@ -287,11 +289,13 @@
             // 
             // trackBar_PlayBackPosition
             // 
-            this.trackBar_PlayBackPosition.Location = new System.Drawing.Point(12, 504);
+            this.trackBar_PlayBackPosition.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBar_PlayBackPosition.Location = new System.Drawing.Point(12, 513);
             this.trackBar_PlayBackPosition.Maximum = 100;
             this.trackBar_PlayBackPosition.Name = "trackBar_PlayBackPosition";
             this.trackBar_PlayBackPosition.Size = new System.Drawing.Size(428, 45);
             this.trackBar_PlayBackPosition.TabIndex = 11;
+            this.trackBar_PlayBackPosition.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar_PlayBackPosition.Scroll += new System.EventHandler(this.trackBar_PlayBackPosition_Scroll);
             // 
             // label_PlayBackRate
@@ -306,7 +310,7 @@
             // label_PlayBackPosition
             // 
             this.label_PlayBackPosition.AutoSize = true;
-            this.label_PlayBackPosition.Location = new System.Drawing.Point(21, 488);
+            this.label_PlayBackPosition.Location = new System.Drawing.Point(21, 473);
             this.label_PlayBackPosition.Name = "label_PlayBackPosition";
             this.label_PlayBackPosition.Size = new System.Drawing.Size(123, 13);
             this.label_PlayBackPosition.TabIndex = 13;
@@ -315,7 +319,7 @@
             // checkBox_AutoPlayBackRate
             // 
             this.checkBox_AutoPlayBackRate.AutoSize = true;
-            this.checkBox_AutoPlayBackRate.Location = new System.Drawing.Point(212, 414);
+            this.checkBox_AutoPlayBackRate.Location = new System.Drawing.Point(556, 379);
             this.checkBox_AutoPlayBackRate.Name = "checkBox_AutoPlayBackRate";
             this.checkBox_AutoPlayBackRate.Size = new System.Drawing.Size(115, 17);
             this.checkBox_AutoPlayBackRate.TabIndex = 14;
@@ -331,6 +335,10 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "label1";
             // 
+            // toolTip_btnPlayPause
+            // 
+            this.toolTip_btnPlayPause.IsBalloon = true;
+            // 
             // btnPause
             // 
             this.btnPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -343,6 +351,18 @@
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler(this.btn_Pause_Click);
             // 
+            // toolTip_btnStop
+            // 
+            this.toolTip_btnStop.IsBalloon = true;
+            // 
+            // toolTip_btnRepeat
+            // 
+            this.toolTip_btnRepeat.IsBalloon = true;
+            // 
+            // toolTip_btnTimeStamp
+            // 
+            this.toolTip_btnTimeStamp.IsBalloon = true;
+            // 
             // txtBoxUserSec
             // 
             this.txtBoxUserSec.Location = new System.Drawing.Point(320, 375);
@@ -354,7 +374,7 @@
             // checkBox_AutoPlayNext
             // 
             this.checkBox_AutoPlayNext.AutoSize = true;
-            this.checkBox_AutoPlayNext.Location = new System.Drawing.Point(556, 375);
+            this.checkBox_AutoPlayNext.Location = new System.Drawing.Point(679, 379);
             this.checkBox_AutoPlayNext.Name = "checkBox_AutoPlayNext";
             this.checkBox_AutoPlayNext.Size = new System.Drawing.Size(93, 17);
             this.checkBox_AutoPlayNext.TabIndex = 19;
@@ -364,11 +384,24 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(492, 415);
+            this.listBox1.Location = new System.Drawing.Point(447, 431);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(280, 134);
+            this.listBox1.Size = new System.Drawing.Size(325, 121);
             this.listBox1.TabIndex = 20;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // toolTip_PositionTrackBar
+            // 
+            this.toolTip_PositionTrackBar.IsBalloon = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(587, 415);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Playlist";
             // 
             // elementHost1
             // 
@@ -386,6 +419,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.checkBox_AutoPlayNext);
             this.Controls.Add(this.btnPause);
@@ -461,6 +495,8 @@
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.CheckBox checkBox_AutoPlayNext;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ToolTip toolTip_PositionTrackBar;
+        private System.Windows.Forms.Label label2;
     }
 }
 
