@@ -70,8 +70,11 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.toolTip_PositionTrackBar = new System.Windows.Forms.ToolTip(this.components);
             this.label2 = new System.Windows.Forms.Label();
+            this.btnCreateLabel = new System.Windows.Forms.Button();
+            this.lstBoxLabel = new System.Windows.Forms.ListBox();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
+            this.btnUpdatelstBoxLabel = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
@@ -86,7 +89,7 @@
             this.audioToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1175, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "File";
             // 
@@ -132,7 +135,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fontToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // fontToolStripMenuItem
@@ -403,22 +406,54 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "Playlist";
             // 
+            // btnCreateLabel
+            // 
+            this.btnCreateLabel.Location = new System.Drawing.Point(778, 431);
+            this.btnCreateLabel.Name = "btnCreateLabel";
+            this.btnCreateLabel.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateLabel.TabIndex = 23;
+            this.btnCreateLabel.Text = "Add Label";
+            this.btnCreateLabel.UseVisualStyleBackColor = true;
+            this.btnCreateLabel.Click += new System.EventHandler(this.btnCreateLabel_Click);
+            // 
+            // lstBoxLabel
+            // 
+            this.lstBoxLabel.FormattingEnabled = true;
+            this.lstBoxLabel.Location = new System.Drawing.Point(859, 431);
+            this.lstBoxLabel.Name = "lstBoxLabel";
+            this.lstBoxLabel.Size = new System.Drawing.Size(287, 121);
+            this.lstBoxLabel.TabIndex = 24;
+            this.lstBoxLabel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBoxLabel_MouseDoubleClick);
+            // 
             // elementHost1
             // 
             this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.elementHost1.Location = new System.Drawing.Point(12, 27);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(760, 307);
+            this.elementHost1.Size = new System.Drawing.Size(1151, 307);
             this.elementHost1.TabIndex = 16;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
+            // 
+            // btnUpdatelstBoxLabel
+            // 
+            this.btnUpdatelstBoxLabel.Location = new System.Drawing.Point(778, 460);
+            this.btnUpdatelstBoxLabel.Name = "btnUpdatelstBoxLabel";
+            this.btnUpdatelstBoxLabel.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdatelstBoxLabel.TabIndex = 25;
+            this.btnUpdatelstBoxLabel.Text = "Update List";
+            this.btnUpdatelstBoxLabel.UseVisualStyleBackColor = true;
+            this.btnUpdatelstBoxLabel.Click += new System.EventHandler(this.btnUpdatelstBoxLabel_Click);
             // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1175, 561);
+            this.Controls.Add(this.btnUpdatelstBoxLabel);
+            this.Controls.Add(this.lstBoxLabel);
+            this.Controls.Add(this.btnCreateLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.checkBox_AutoPlayNext);
@@ -497,6 +532,9 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ToolTip toolTip_PositionTrackBar;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnCreateLabel;
+        private System.Windows.Forms.ListBox lstBoxLabel;
+        private System.Windows.Forms.Button btnUpdatelstBoxLabel;
     }
 }
 

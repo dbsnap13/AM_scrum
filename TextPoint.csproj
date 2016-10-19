@@ -35,9 +35,6 @@
     <Reference Include="ExtendedTextBox">
       <HintPath>..\..\..\Desktop\ExtendedTextBox.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -56,9 +53,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AudioPlayer.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="AudioPlayer.cs" />
+    <Compile Include="ClickableObject.cs" />
     <Compile Include="EnhanchedTextBox.xaml.cs">
       <DependentUpon>EnhanchedTextBox.xaml</DependentUpon>
     </Compile>
@@ -68,9 +64,6 @@
     <Compile Include="FRMMain.Designer.cs">
       <DependentUpon>FRMMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="IExtension.cs" />
-    <Compile Include="InvertedColors.cs" />
-    <Compile Include="ITextPoint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpeedRate.cs" />
@@ -86,7 +79,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,9 +116,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ExtendedTextBox.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,15 +16,13 @@ using WMPLib;
 
 namespace TextPoint
 {
-    public partial class FRMMain : Form, ITextPoint
+    public partial class FRMMain : Form
     {
-        //test
-        //variabes for auto speed adjustment
         DateTime? date = null;
         int words = 0;
         int wordcount = 0;
         string lastword = string.Empty;
-
+        ClickableObject co = new ClickableObject();
         AudioPlayer _player = new AudioPlayer();
 
 
@@ -35,6 +33,7 @@ namespace TextPoint
             label_PlayBackPosition.Text = string.Empty;
             checkBox_AutoPlayNext.CheckedChanged += CheckBox_AutoPlayNext_CheckedChanged;
             listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
+
         }
 
         private void ListBox1_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -51,36 +50,9 @@ namespace TextPoint
 
         private void FRMMain_Load(object sender, EventArgs e)
         {
-            initiateExtensions();
             enhanchedTextBox1.PreviewKeyDown += EnhanchedTextBox1_PreviewKeyDown;
         }
 
-        private void initiateExtensions()
-        {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var dlls = Directory.GetFiles(path, "*.dll");
-            foreach (var dll in dlls)
-            {
-                Assembly assm = Assembly.LoadFile(dll);
-                foreach (var type in assm.GetTypes())
-                {
-                    if ((typeof(IExtension).IsAssignableFrom(type)) && !type.IsInterface)
-                    {
-                        var extensionInstance = (IExtension)Activator.CreateInstance(type);
-                        extensionInstance.Initialize(this);
-                        string title = extensionInstance.GetTitle();
-                        ToolStripItem tsi = new ToolStripMenuItem(title);
-                        tsi.Click += (o, e) => { extensionInstance.Execute(); };
-                        toolsToolStripMenuItem.DropDownItems.Add(tsi);
-                    }
-                }
-            }
-        }
-
-        void tsi_Click(object sender, EventArgs e)
-        {
-
-        }
         #endregion
 
         #region ToolStripMenu
@@ -148,7 +120,6 @@ namespace TextPoint
             ofd.Multiselect = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                //string format = Path.GetExtension(ofd.FileName);
                 if (ofd.FileName.Contains("rtf"))
                 {
                     TextRange range;
@@ -196,34 +167,6 @@ namespace TextPoint
         }
         #endregion
 
-        #region SetExtensibility
-        public void SetBackgroundColor(Color col)
-        {
-            //enhTxtBox.BackColor = col;
-        }
-
-        public void SetForegroundColor(Color col)
-        {
-            //enhTxtBox.ForeColor = col;
-        }
-
-        public void SetFont(Font font)
-        {
-            //enhTxtBox.Font = font;
-        }
-
-        public string GetText()
-        {
-            throw new NotImplementedException();
-            //return enhanchedTextBox1.txtBox.Text;
-        }
-
-        public void SetText(string text)
-        {
-            //enhanchedTextBox1.txtBox.Text = text;
-        }
-        #endregion
-
         #region Buttons
         /// <summary>
         /// Sets and inserts the timestamp into the text.
@@ -234,7 +177,7 @@ namespace TextPoint
             {
                 TimeSpan time = TimeSpan.FromSeconds(_player.CurrentPosition);
                 string formattedTimeStamp = string.Empty;
-                if (_player.Duration/ 60 >= 60)
+                if (_player.Duration / 60 >= 60)
                 {
                     lblCurrent.Text = time.ToString(@"hh\:mm\:ss");
                     formattedTimeStamp = "(" + time.ToString(@"hh\:mm\:ss") + ") ";
@@ -244,7 +187,7 @@ namespace TextPoint
                     lblCurrent.Text = time.ToString(@"mm\:ss");
                     formattedTimeStamp = "(" + time.ToString(@"mm\:ss") + ") ";
                 }
-                            
+
                 enhanchedTextBox1.txtBox.CaretPosition.InsertTextInRun(formattedTimeStamp);
                 enhanchedTextBox1.txtBox.CaretPosition = enhanchedTextBox1.txtBox.Selection.End;
                 enhanchedTextBox1.txtBox.Focus();
@@ -252,7 +195,7 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// Activates the audiotimer, currently set to 3 secs. 'wav' is in this case arbitrary, might as well be 'mp3'.
+        /// 
         /// </summary>
         private void btnRepeat_Click(object sender, EventArgs e)
         {
@@ -271,7 +214,7 @@ namespace TextPoint
         {
             _player.Play();
             timer1.Interval = 500;
-            timer1.Tick += Timer1_Tick;       
+            timer1.Tick += Timer1_Tick;
             timer1.Start();
             enhanchedTextBox1.txtBox.Focus();
         }
@@ -307,12 +250,11 @@ namespace TextPoint
         /// </summary>
         private void FRMMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(_player.SetOutput)
+            if (_player.SetOutput)
             {
                 _player.Dispose();
             }          
         }
-
 
         private void EnhanchedTextBox1_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -417,7 +359,7 @@ namespace TextPoint
             {
                 label_PlayBackRate.Text = SpeedRate.DisplayRate(SpeedRate.ConvertRate(trackBar_PlayBackRate.Value).ToString());
             }
-                
+
             enhanchedTextBox1.txtBox.Focus();
         }
 
@@ -427,14 +369,6 @@ namespace TextPoint
         private void trackBar_PlayBackPosition_Scroll(object sender, EventArgs e)
         {
             _player.SetCurrentPosition(trackBar_PlayBackPosition.Value);            
-        }
-
-        /// <summary>
-        /// Timer event for the position of trackbar
-        /// </summary>
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>
@@ -500,6 +434,49 @@ namespace TextPoint
             DisplayPosition();
         }
 
+        /// <summary>
+        /// Creates a label and adds it to the listbox. Also makes sure the label is not empty or already existing.
+        /// </summary>
+        private void btnCreateLabel_Click(object sender, EventArgs e)
+        {
+            var textPoint = enhanchedTextBox1.txtBox.Selection.End;
+            string text = enhanchedTextBox1.txtBox.Selection.Text;
+            text = text.Trim();
+            if(!(lstBoxLabel.Items.Contains(text)) && text != string.Empty)
+            {
+                co.AddToDic(text, textPoint);
+                lstBoxLabel.Items.Add(text);
+            }
+        }
+
+        /// <summary>
+        /// On MouseDoubleClick sets the CaretPosition to the correlating TextPointer for the item in the listbox.
+        /// </summary>
+        private void lstBoxLabel_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            string txtPtr = (string)lstBoxLabel.SelectedItem;
+            enhanchedTextBox1.txtBox.Focus();
+            if (!(txtPtr == null))
+            {
+                enhanchedTextBox1.txtBox.CaretPosition = co.GetPtr(txtPtr);
+            }
+        }
+
+        /// <summary>
+        /// Updates the listbox and removes the correlating value from both the dictionary and the listbox.
+        /// </summary>
+        private void btnUpdatelstBoxLabel_Click(object sender, EventArgs e)
+        {
+            TextRange range = new TextRange(enhanchedTextBox1.txtBox.Document.ContentStart, enhanchedTextBox1.txtBox.Document.ContentEnd);
+            for (int i = 0; i < lstBoxLabel.Items.Count; i++)
+            {
+                string textPointer = (string)lstBoxLabel.Items[i];
+                if (!range.Text.Contains(textPointer))
+                {
+                    co.RemoveFromDic(textPointer);
+                    lstBoxLabel.Items.RemoveAt(i);
+                }
+            }
+        }
     }
 }
-
