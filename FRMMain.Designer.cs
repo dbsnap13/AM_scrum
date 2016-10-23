@@ -37,6 +37,10 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.predefinedListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,9 +76,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnCreateLabel = new System.Windows.Forms.Button();
             this.lstBoxLabel = new System.Windows.Forms.ListBox();
+            this.btnUpdatelstBoxLabel = new System.Windows.Forms.Button();
+            this.comboBox_ListOfNames = new System.Windows.Forms.ComboBox();
+            this.label_ListOfNames = new System.Windows.Forms.Label();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.enhanchedTextBox1 = new TextPoint.EnhanchedTextBox();
-            this.btnUpdatelstBoxLabel = new System.Windows.Forms.Button();
+            this.checkBox_WithName = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_PlayBackPosition)).BeginInit();
@@ -133,16 +140,48 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fontToolStripMenuItem});
+            this.fontToolStripMenuItem,
+            this.predefinedListToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // fontToolStripMenuItem
             // 
             this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.fontToolStripMenuItem.Text = "Font";
+            // 
+            // predefinedListToolStripMenuItem
+            // 
+            this.predefinedListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNameToolStripMenuItem,
+            this.removeNameToolStripMenuItem,
+            this.clearAllToolStripMenuItem});
+            this.predefinedListToolStripMenuItem.Name = "predefinedListToolStripMenuItem";
+            this.predefinedListToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.predefinedListToolStripMenuItem.Text = "Predefined list";
+            // 
+            // addNameToolStripMenuItem
+            // 
+            this.addNameToolStripMenuItem.Name = "addNameToolStripMenuItem";
+            this.addNameToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.addNameToolStripMenuItem.Text = "Add Name";
+            this.addNameToolStripMenuItem.Click += new System.EventHandler(this.addNameToolStripMenuItem_Click);
+            // 
+            // removeNameToolStripMenuItem
+            // 
+            this.removeNameToolStripMenuItem.Name = "removeNameToolStripMenuItem";
+            this.removeNameToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.removeNameToolStripMenuItem.Text = "Remove Name";
+            this.removeNameToolStripMenuItem.Click += new System.EventHandler(this.removeNameToolStripMenuItem_Click);
+            // 
+            // clearAllToolStripMenuItem
+            // 
+            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.clearAllToolStripMenuItem.Text = "Clear All Names";
+            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -332,7 +371,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(444, 383);
+            this.label1.Location = new System.Drawing.Point(469, 377);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 15;
@@ -425,6 +464,33 @@
             this.lstBoxLabel.TabIndex = 24;
             this.lstBoxLabel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBoxLabel_MouseDoubleClick);
             // 
+            // btnUpdatelstBoxLabel
+            // 
+            this.btnUpdatelstBoxLabel.Location = new System.Drawing.Point(778, 460);
+            this.btnUpdatelstBoxLabel.Name = "btnUpdatelstBoxLabel";
+            this.btnUpdatelstBoxLabel.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdatelstBoxLabel.TabIndex = 25;
+            this.btnUpdatelstBoxLabel.Text = "Update List";
+            this.btnUpdatelstBoxLabel.UseVisualStyleBackColor = true;
+            this.btnUpdatelstBoxLabel.Click += new System.EventHandler(this.btnUpdatelstBoxLabel_Click);
+            // 
+            // comboBox_ListOfNames
+            // 
+            this.comboBox_ListOfNames.FormattingEnabled = true;
+            this.comboBox_ListOfNames.Location = new System.Drawing.Point(1025, 348);
+            this.comboBox_ListOfNames.Name = "comboBox_ListOfNames";
+            this.comboBox_ListOfNames.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_ListOfNames.TabIndex = 26;
+            // 
+            // label_ListOfNames
+            // 
+            this.label_ListOfNames.AutoSize = true;
+            this.label_ListOfNames.Location = new System.Drawing.Point(947, 351);
+            this.label_ListOfNames.Name = "label_ListOfNames";
+            this.label_ListOfNames.Size = new System.Drawing.Size(72, 13);
+            this.label_ListOfNames.TabIndex = 27;
+            this.label_ListOfNames.Text = "List of names:";
+            // 
             // elementHost1
             // 
             this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -436,21 +502,24 @@
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
             // 
-            // btnUpdatelstBoxLabel
+            // checkBox_WithName
             // 
-            this.btnUpdatelstBoxLabel.Location = new System.Drawing.Point(778, 460);
-            this.btnUpdatelstBoxLabel.Name = "btnUpdatelstBoxLabel";
-            this.btnUpdatelstBoxLabel.Size = new System.Drawing.Size(75, 23);
-            this.btnUpdatelstBoxLabel.TabIndex = 25;
-            this.btnUpdatelstBoxLabel.Text = "Update List";
-            this.btnUpdatelstBoxLabel.UseVisualStyleBackColor = true;
-            this.btnUpdatelstBoxLabel.Click += new System.EventHandler(this.btnUpdatelstBoxLabel_Click);
+            this.checkBox_WithName.AutoSize = true;
+            this.checkBox_WithName.Location = new System.Drawing.Point(1025, 377);
+            this.checkBox_WithName.Name = "checkBox_WithName";
+            this.checkBox_WithName.Size = new System.Drawing.Size(128, 17);
+            this.checkBox_WithName.TabIndex = 29;
+            this.checkBox_WithName.Text = "Timestamp with name";
+            this.checkBox_WithName.UseVisualStyleBackColor = true;
             // 
             // FRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1175, 561);
+            this.Controls.Add(this.checkBox_WithName);
+            this.Controls.Add(this.label_ListOfNames);
+            this.Controls.Add(this.comboBox_ListOfNames);
             this.Controls.Add(this.btnUpdatelstBoxLabel);
             this.Controls.Add(this.lstBoxLabel);
             this.Controls.Add(this.btnCreateLabel);
@@ -535,6 +604,13 @@
         private System.Windows.Forms.Button btnCreateLabel;
         private System.Windows.Forms.ListBox lstBoxLabel;
         private System.Windows.Forms.Button btnUpdatelstBoxLabel;
+        private System.Windows.Forms.ToolStripMenuItem predefinedListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearAllToolStripMenuItem;
+        private System.Windows.Forms.ComboBox comboBox_ListOfNames;
+        private System.Windows.Forms.Label label_ListOfNames;
+        private System.Windows.Forms.CheckBox checkBox_WithName;
     }
 }
 

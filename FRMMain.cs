@@ -188,6 +188,11 @@ namespace TextPoint
                     formattedTimeStamp = "(" + time.ToString(@"mm\:ss") + ") ";
                 }
 
+                if(checkBox_WithName.Checked && !string.IsNullOrEmpty(comboBox_ListOfNames.Text))
+                {
+                    formattedTimeStamp += " " + comboBox_ListOfNames.SelectedItem.ToString() + ": ";
+                }
+                
                 enhanchedTextBox1.txtBox.CaretPosition.InsertTextInRun(formattedTimeStamp);
                 enhanchedTextBox1.txtBox.CaretPosition = enhanchedTextBox1.txtBox.Selection.End;
                 enhanchedTextBox1.txtBox.Focus();
@@ -477,6 +482,86 @@ namespace TextPoint
                     lstBoxLabel.Items.RemoveAt(i);
                 }
             }
+        }
+
+        private void addNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Please enter a name", "Add new name", "");
+            if(!string.IsNullOrEmpty(input))
+            {
+                if (!string.IsNullOrEmpty(input) && !ContainsName(input))
+                {
+                    comboBox_ListOfNames.Items.Add(input);
+                    comboBox_ListOfNames.SelectedIndex = 0;
+                }
+                else
+                if (MessageBox.Show("Name entered is not valid or already in list, would you like to try again?", "Name not valid", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    addNameToolStripMenuItem.PerformClick();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if predefined list contains the name
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private bool ContainsName(string input)
+        {
+            for(int i = 0; i<comboBox_ListOfNames.Items.Count; i++)
+            {
+                if(input == comboBox_ListOfNames.Items[i].ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void removeNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Please enter a name to remove", "Remove name", "");
+            if(!string.IsNullOrEmpty(input))
+            {
+                if(ContainsName(input))
+                {
+                    RemoveName(input);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the name from the predefined list
+        /// </summary>
+        /// <param name="input"></param>
+        private void RemoveName(string input)
+        {
+            for (int i = 0; i < comboBox_ListOfNames.Items.Count; i++)
+            {
+                if (input == comboBox_ListOfNames.Items[i].ToString())
+                {
+                    comboBox_ListOfNames.Items.Remove(input);
+                    if (comboBox_ListOfNames.Items.Count == 0)
+                    {
+                        comboBox_ListOfNames.Text = "";
+                    }
+                    else
+                        comboBox_ListOfNames.SelectedIndex = 0;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// clears all names from the predefined list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            comboBox_ListOfNames.Items.Clear();
+            comboBox_ListOfNames.Text = "";
         }
     }
 }

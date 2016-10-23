@@ -35,6 +35,7 @@
     <Reference Include="ExtendedTextBox">
       <HintPath>..\..\..\Desktop\ExtendedTextBox.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
