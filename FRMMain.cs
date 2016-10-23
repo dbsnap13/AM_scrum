@@ -282,6 +282,10 @@ namespace TextPoint
                         btnStop.PerformClick();
                         break;
 
+                    case Keys.F6:
+                        ToggleList();
+                        break;
+
                     case Keys.Space:
                         if (!string.IsNullOrEmpty(lastword))
                         {
@@ -302,6 +306,19 @@ namespace TextPoint
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Toggled by F6
+        /// </summary>
+        private void ToggleList()
+        {
+            if (comboBox_ListOfNames.Items.Count  > comboBox_ListOfNames.SelectedIndex + 1)
+            {
+                comboBox_ListOfNames.SelectedIndex = comboBox_ListOfNames.SelectedIndex + 1;
+            }
+            else
+                comboBox_ListOfNames.SelectedIndex = 0;
         }
 
         /// <summary>
