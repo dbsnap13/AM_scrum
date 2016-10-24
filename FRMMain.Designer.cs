@@ -303,7 +303,7 @@
             this.btnPlay.Text = "Play";
             this.toolTip_btnPlayPause.SetToolTip(this.btnPlay, "Play (F2)");
             this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Click += new System.EventHandler(this.btnPlayPause_Click);
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnStop
             // 

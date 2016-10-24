@@ -233,7 +233,7 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// 
+        /// Repeats the amount of seconds set
         /// </summary>
         private void btnRepeat_Click(object sender, EventArgs e)
         {
@@ -256,7 +256,10 @@ namespace TextPoint
 
         }
 
-        private void btnPlayPause_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Play the audio
+        /// </summary>
+        private void btnPlay_Click(object sender, EventArgs e)
         {
             _player.Play();
             timer1.Interval = 500;
@@ -265,6 +268,9 @@ namespace TextPoint
             enhanchedTextBox1.txtBox.Focus();
         }
 
+        /// <summary>
+        /// Pause the audio
+        /// </summary>
         private void btn_Pause_Click(object sender, EventArgs e)
         {
             _player.Pause();
@@ -274,6 +280,9 @@ namespace TextPoint
             enhanchedTextBox1.txtBox.Focus();
         }
 
+        /// <summary>
+        /// Timer for the playback position
+        /// </summary>
         private void Timer1_Tick(object sender, EventArgs e)
         {
             trackBar_PlayBackPosition.Value = (int)_player.CurrentPosition;
@@ -281,6 +290,9 @@ namespace TextPoint
             trackBar_PlayBackPosition.Maximum = (int)_player.Duration; //not efficient, but for now it works..
         }
 
+        /// <summary>
+        /// Stops the audio and moves to start position
+        /// </summary>
         private void btnStop_Click(object sender, EventArgs e)
         {
             _player.Stop();
@@ -302,6 +314,9 @@ namespace TextPoint
             }          
         }
 
+        /// <summary>
+        /// Used for shortcuts
+        /// </summary>
         private void EnhanchedTextBox1_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             Keys keyChar = (Keys)KeyInterop.VirtualKeyFromKey(e.Key);
@@ -363,7 +378,7 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// Used when on auto speed. NEED TO improve code..
+        /// Used when on auto speed.
         /// </summary>
         private void CheckRateOK()
         {
@@ -384,7 +399,7 @@ namespace TextPoint
         }
 
         /// <summary>
-        /// REMOVE THIS????
+        /// If the textbox is not focused this is used
         /// </summary>
         private void FRMMain_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
@@ -410,6 +425,9 @@ namespace TextPoint
             }
         }
 
+        /// <summary>
+        /// Sets the speedrate of the audio being played
+        /// </summary>
         private void trackBar_PlayBackRate_Scroll(object sender, EventArgs e)
         {
             if (_player.SetOutput)
@@ -443,6 +461,9 @@ namespace TextPoint
             toolTip_PositionTrackBar.SetToolTip(trackBar_PlayBackPosition, _player.CurrentPositionToString);
         }
 
+        /// <summary>
+        /// Displays the length of current audiofile
+        /// </summary>
         private string GetLength()
         {
             TimeSpan t = TimeSpan.FromSeconds(_player.CurrentAudioFileLenght);
@@ -490,6 +511,9 @@ namespace TextPoint
             enhanchedTextBox1.txtBox.Focus();
         }
 
+        /// <summary>
+        /// Loads the audiofile selected
+        /// </summary>
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnStop.PerformClick();
@@ -542,6 +566,9 @@ namespace TextPoint
             }
         }
 
+        /// <summary>
+        /// Dialog for adding name
+        /// </summary>
         private void addNameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string input = Microsoft.VisualBasic.Interaction.InputBox("Please enter a name", "Add new name", "");
@@ -563,8 +590,6 @@ namespace TextPoint
         /// <summary>
         /// Checks if predefined list contains the name
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         private bool ContainsName(string input)
         {
             for(int i = 0; i<comboBox_ListOfNames.Items.Count; i++)
@@ -577,6 +602,9 @@ namespace TextPoint
             return false;
         }
 
+        /// <summary>
+        /// Dialog when removing name
+        /// </summary>
         private void removeNameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string input = Microsoft.VisualBasic.Interaction.InputBox("Please enter a name to remove", "Remove name", "");
@@ -614,8 +642,6 @@ namespace TextPoint
         /// <summary>
         /// clears all names from the predefined list
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             comboBox_ListOfNames.Items.Clear();
