@@ -63,7 +63,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.checkBox_AutoPlayBackRate = new System.Windows.Forms.CheckBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.toolTip_btnPlayPause = new System.Windows.Forms.ToolTip(this.components);
             this.btnPause = new System.Windows.Forms.Button();
             this.toolTip_btnStop = new System.Windows.Forms.ToolTip(this.components);
@@ -368,15 +367,6 @@
             this.checkBox_AutoPlayBackRate.Text = "Auto playback rate";
             this.checkBox_AutoPlayBackRate.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(469, 377);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "label1";
-            // 
             // toolTip_btnPlayPause
             // 
             this.toolTip_btnPlayPause.IsBalloon = true;
@@ -529,7 +519,6 @@
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.txtBoxUserSec);
             this.Controls.Add(this.elementHost1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBox_AutoPlayBackRate);
             this.Controls.Add(this.label_PlayBackPosition);
             this.Controls.Add(this.label_PlayBackRate);
@@ -581,7 +570,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox checkBox_AutoPlayBackRate;
         private System.Windows.Forms.Timer timer2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private EnhanchedTextBox enhanchedTextBox1;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;

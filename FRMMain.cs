@@ -488,7 +488,6 @@ namespace TextPoint
             wordcount = words;
             timer2.Stop();
             CheckRateOK();
-            label1.Text = "Word count: " + wordcount.ToString() + "per 10 sec";
             wordcount = 0;
             words = 0;
         }
