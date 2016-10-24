@@ -34,6 +34,38 @@ namespace TextPoint
             checkBox_AutoPlayNext.CheckedChanged += CheckBox_AutoPlayNext_CheckedChanged;
             listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
 
+            DisableControls();
+
+        }
+
+        private void DisableControls()
+        {
+            btnPlay.Enabled = false;
+            playToolStripMenuItem.Enabled = false;
+            btnPause.Enabled = false;
+            pauseToolStripMenuItem.Enabled = false;
+            btnStop.Enabled = false;
+            stopToolStripMenuItem.Enabled = false;
+            btnRepeat.Enabled = false;
+            repeatToolStripMenuItem.Enabled = false;
+            btnTimeStamp.Enabled = false;
+            btnCreateLabel.Enabled = false;
+            btnUpdatelstBoxLabel.Enabled = false;
+        }
+
+        private void EnableControls()
+        {
+            btnPlay.Enabled = true;
+            playToolStripMenuItem.Enabled = true;
+            btnPause.Enabled = true;
+            pauseToolStripMenuItem.Enabled = true;
+            btnStop.Enabled = true;
+            stopToolStripMenuItem.Enabled = true;
+            btnRepeat.Enabled = true;
+            repeatToolStripMenuItem.Enabled = true;
+            btnTimeStamp.Enabled = true;
+            btnCreateLabel.Enabled = true;
+            btnUpdatelstBoxLabel.Enabled = true;
         }
 
         private void ListBox1_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -139,6 +171,7 @@ namespace TextPoint
                 listBox1.SelectedIndex = 0;
                 DisplayPosition();
                 enhanchedTextBox1.txtBox.Focus();
+                EnableControls();
             }
         }
 
@@ -204,15 +237,23 @@ namespace TextPoint
         /// </summary>
         private void btnRepeat_Click(object sender, EventArgs e)
         {
-            if (Int32.Parse(txtBoxUserSec.Text) > 0)
+            try
             {
-                _player.EnableOrDisableTimer(Int32.Parse(txtBoxUserSec.Text));
+                if (Int32.Parse(txtBoxUserSec.Text) > 0)
+                {
+                    _player.EnableOrDisableTimer(Int32.Parse(txtBoxUserSec.Text));
+                }
+                else
+                {
+                    MessageBox.Show("Enter a valid number", "You must enter a digit larger than 0.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                enhanchedTextBox1.txtBox.Focus();
             }
-            else
+            catch(FormatException)
             {
-                MessageBox.Show("Enter a valid number", "You must enter a digit larger than 0.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must enter seconds to repeat","No user input");
             }
-            enhanchedTextBox1.txtBox.Focus();
+
         }
 
         private void btnPlayPause_Click(object sender, EventArgs e)
