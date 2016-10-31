@@ -95,7 +95,7 @@
             this.audioToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1175, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1020, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "File";
             // 
@@ -142,7 +142,7 @@
             this.fontToolStripMenuItem,
             this.predefinedListToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // fontToolStripMenuItem
@@ -487,7 +487,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.elementHost1.Location = new System.Drawing.Point(12, 27);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1151, 307);
+            this.elementHost1.Size = new System.Drawing.Size(996, 307);
             this.elementHost1.TabIndex = 16;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.enhanchedTextBox1;
@@ -506,7 +506,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1175, 561);
+            this.ClientSize = new System.Drawing.Size(1020, 561);
             this.Controls.Add(this.checkBox_WithName);
             this.Controls.Add(this.label_ListOfNames);
             this.Controls.Add(this.comboBox_ListOfNames);
@@ -532,7 +532,6 @@
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(1191, 600);
             this.Name = "FRMMain";
             this.Text = "TextPoint";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FRMMain_FormClosing);
